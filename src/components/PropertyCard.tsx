@@ -22,7 +22,7 @@ const PropertyCard = ({
 }: PropertyCardProps) => {
   return (
     <motion.article 
-      className="group relative bg-cardstock cursor-pointer"
+      className="group relative cursor-pointer"
       whileHover={{ 
         y: -12,
         transition: { duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }
@@ -45,9 +45,10 @@ const PropertyCard = ({
       {/* Double Border - Inner (4px offset) */}
       <div className="absolute inset-[4px] border border-bronze/50 group-hover:border-bronze/80 transition-colors duration-500" />
 
-      {/* Content Container */}
-      <div className="relative p-[4px] border-primary-foreground border shadow-royal">
-        {/* Image with Arch Shape */}
+      {/* Card Frame */}
+      <div className="relative p-[4px] shadow-royal">
+        
+        {/* TOP SECTION: Clean Image (No Overlay Text) */}
         <div className="relative overflow-hidden rounded-t-[50%_20%] mx-[4px] mt-[4px]">
           <div className="aspect-[4/3] overflow-hidden">
             <motion.img 
@@ -55,13 +56,11 @@ const PropertyCard = ({
               alt={title} 
               className="w-full h-full object-cover"
               initial={{ scale: 1 }}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.08 }}
               transition={{ duration: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
             />
-            {/* Vignette Shadow */}
-            <div className="absolute inset-0 shadow-[inset_0_0_40px_10px_rgba(62,39,35,0.3)]" />
-            {/* Bottom gradient for blend */}
-            <div className="absolute inset-0 bg-gradient-to-t from-cardstock/80 via-transparent to-transparent" />
+            {/* Subtle Vignette - keeps image edges soft */}
+            <div className="absolute inset-0 shadow-[inset_0_0_30px_5px_rgba(62,39,35,0.2)]" />
           </div>
           
           {/* Exclusive Badge */}
@@ -72,8 +71,9 @@ const PropertyCard = ({
           </div>
         </div>
 
-        {/* Card Content */}
-        <div className="p-6 pt-4">
+        {/* BOTTOM SECTION: Content Block (Cream Plaque) */}
+        <div className="bg-[#FDFBF7] mx-[4px] mb-[4px] p-6 text-center border-t-2 border-bronze/30">
+          
           {/* Title */}
           <h3 className="font-royal text-xl text-espresso tracking-wide mb-1 group-hover:text-bronze transition-colors duration-300">
             {title}
@@ -84,45 +84,45 @@ const PropertyCard = ({
             {location}
           </p>
 
-          {/* Decorative Line */}
-          <div className="w-16 h-px bg-gradient-to-r from-bronze via-bronze/50 to-transparent mb-4" />
+          {/* Decorative Line - Centered */}
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-bronze to-transparent mx-auto mb-4" />
 
-          {/* Amenities with Engraved Icons */}
-          <div className="flex items-center gap-6 mb-5">
+          {/* Amenities - Centered */}
+          <div className="flex items-center justify-center gap-6 mb-5">
             <div className="flex items-center gap-2">
-              <Bed size={18} strokeWidth={1} className="text-bronze" />
+              <Bed size={16} strokeWidth={1.5} className="text-bronze" />
               <span className="font-body text-sm text-foreground/70">
                 {bedrooms} Beds
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Bath size={18} strokeWidth={1} className="text-bronze" />
+              <Bath size={16} strokeWidth={1.5} className="text-bronze" />
               <span className="font-body text-sm text-foreground/70">
                 {bathrooms} Baths
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Key size={18} strokeWidth={1} className="text-bronze" />
+              <Key size={16} strokeWidth={1.5} className="text-bronze" />
               <span className="font-body text-sm text-foreground/70">
                 {area}
               </span>
             </div>
           </div>
 
-          {/* Price */}
-          <div className="flex items-baseline justify-between border-t border-bronze/20 pt-4">
-            <span className="font-body text-xs tracking-wider text-muted-foreground uppercase">
+          {/* Price - Centered & Prominent */}
+          <div className="border-t border-bronze/20 pt-4">
+            <span className="font-body text-xs tracking-wider text-muted-foreground uppercase block mb-1">
               Starting From
             </span>
-            <span className="font-royal text-2xl text-primary tracking-wide">
+            <span className="font-royal text-2xl text-primary tracking-wide text-shimmer">
               {price}
             </span>
           </div>
         </div>
 
-        {/* View Details Link */}
+        {/* View Details Link - Slides up on hover */}
         <motion.div 
-          className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-bronze/20 via-gold/30 to-bronze/20 flex items-center justify-center overflow-hidden"
+          className="absolute bottom-[4px] left-[4px] right-[4px] bg-gradient-to-r from-bronze/20 via-gold/30 to-bronze/20 flex items-center justify-center overflow-hidden"
           initial={{ height: 0, opacity: 0 }}
           whileHover={{ height: 48, opacity: 1 }}
           transition={{ duration: 0.3 }}
