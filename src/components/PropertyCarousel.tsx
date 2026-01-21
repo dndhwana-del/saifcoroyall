@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Bed, Bath, Maximize2 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import CalligraphyAccent from "./CalligraphyAccent";
+import PropertyDetailModal from "./PropertyDetailModal";
 
 // Stagger reveal animation variants
 const containerVariants = {
@@ -52,13 +53,15 @@ const PropertyCard = ({
   isHovered,
   onHover,
   onLeave,
-  index
+  index,
+  onClick
 }: { 
   property: Property; 
   isHovered: boolean;
   onHover: () => void;
   onLeave: () => void;
   index: number;
+  onClick: () => void;
 }) => {
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
 
@@ -87,6 +90,7 @@ const PropertyCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
+      onClick={onClick}
     >
       {/* 3D Tilt Container */}
       <motion.div
@@ -329,9 +333,21 @@ const PropertyCard = ({
 const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  const handlePropertyClick = (property: Property) => {
+    setSelectedProperty(property);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProperty(null), 300);
+  };
   
   // Duplicate properties for infinite scroll effect
   const duplicatedProperties = [...properties, ...properties, ...properties];
@@ -401,6 +417,7 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
                 onLeave={() => {
                   setHoveredIndex(null);
                 }}
+                onClick={() => handlePropertyClick(property)}
               />
             ))}
           </motion.div>
@@ -428,6 +445,13 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
           </div>
         </motion.div>
       </div>
+
+      {/* Property Detail Modal */}
+      <PropertyDetailModal 
+        property={selectedProperty}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </motion.section>
   );
 };
