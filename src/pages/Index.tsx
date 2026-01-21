@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
@@ -6,13 +6,18 @@ import property3 from "@/assets/property-3.jpg";
 import CalligraphyAccent from "@/components/CalligraphyAccent";
 import RoyalButton from "@/components/RoyalButton";
 import ScrollReveal from "@/components/ScrollReveal";
+import SmoothScrollReveal, { 
+  MaskReveal, 
+  FloatingElement, 
+  ScrollLinkedReveal 
+} from "@/components/SmoothScrollReveal";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 import HeroSection from "@/components/HeroSection";
 import LocationsSection from "@/components/LocationsSection";
 import MegaFooter from "@/components/MegaFooter";
 import PropertyCarousel from "@/components/PropertyCarousel";
 import MagneticButton from "@/components/MagneticButton";
-import ParallaxSection, { ParallaxFloat, ParallaxLayers } from "@/components/ParallaxSection";
+import ParallaxSection, { ParallaxFloat, ParallaxLayers, HorizontalParallax } from "@/components/ParallaxSection";
 
 const properties = [
   { image: property1, title: "Al Qasr Palace", location: "Emirates Hills, Dubai", price: "AED 185M", bedrooms: 12, bathrooms: 15, area: "45,000 sqft" },
@@ -30,26 +35,37 @@ const Index = () => {
     offset: ["start start", "end end"],
   });
 
+  // Smooth spring for global parallax
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 50,
+    damping: 20,
+  });
+
   // Global parallax for decorative elements
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const decorY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const bgY = useTransform(smoothScroll, [0, 1], ["0%", "30%"]);
+  const decorY = useTransform(smoothScroll, [0, 1], ["0%", "60%"]);
+  const decorScale = useTransform(smoothScroll, [0, 0.5, 1], [0.8, 1.2, 0.8]);
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
-      {/* Continuous Mashrabiya Pattern with Parallax */}
+      {/* Continuous Mashrabiya Pattern with Smooth Parallax */}
       <motion.div 
         className="fixed inset-0 mashrabiya-pattern pointer-events-none z-0"
-        style={{ y: bgY }}
+        style={{ y: bgY, opacity: useTransform(smoothScroll, [0, 0.5, 1], [0.6, 1, 0.6]) }}
       />
       
-      {/* Floating Decorative Elements */}
+      {/* Floating Decorative Elements with enhanced parallax */}
       <motion.div 
         className="fixed top-1/4 right-10 w-32 h-32 border border-gold/10 rounded-full pointer-events-none z-0"
-        style={{ y: decorY }}
+        style={{ y: decorY, scale: decorScale, rotate: useTransform(smoothScroll, [0, 1], [0, 45]) }}
       />
       <motion.div 
         className="fixed bottom-1/3 left-10 w-20 h-20 border border-bronze/10 rotate-45 pointer-events-none z-0"
-        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]) }}
+        style={{ y: useTransform(smoothScroll, [0, 1], ["0%", "-50%"]), scale: decorScale }}
+      />
+      <motion.div 
+        className="fixed top-1/2 right-1/4 w-16 h-16 bg-gradient-radial from-gold/5 to-transparent rounded-full blur-2xl pointer-events-none z-0"
+        style={{ y: useTransform(smoothScroll, [0, 1], ["0%", "-80%"]) }}
       />
       
       {/* Navigation */}
@@ -106,26 +122,29 @@ const Index = () => {
       {/* Property Carousel - Overlaps hero with negative margin */}
       <PropertyCarousel properties={properties} />
 
-      {/* Stats Section with Parallax Layers */}
+      {/* Stats Section with Enhanced Parallax Layers */}
       <ParallaxSection 
         id="estates" 
         className="relative -mt-8 py-16 z-10"
+        smoothness={60}
       >
         <ParallaxLayers />
         <div className="container mx-auto px-6 relative z-10">
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-12">
-            <ParallaxFloat speed={0.2} direction="up">
+          <SmoothScrollReveal className="text-center max-w-3xl mx-auto mb-12" direction="up" blur>
+            <FloatingElement intensity={0.15} direction="vertical">
               <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
-            </ParallaxFloat>
-            <h2 className="text-3xl md:text-4xl font-royal mb-4 text-shimmer">
-              Exceptional Estates
-            </h2>
+            </FloatingElement>
+            <MaskReveal direction="up" delay={0.1}>
+              <h2 className="text-3xl md:text-4xl font-royal mb-4 text-shimmer">
+                Exceptional Estates
+              </h2>
+            </MaskReveal>
             <p className="font-body text-base text-muted-foreground leading-relaxed">
               Each residence represents the zenith of architectural mastery
             </p>
-          </ScrollReveal>
+          </SmoothScrollReveal>
 
-          {/* Stats with floating card effect */}
+          {/* Stats with floating card effect and scroll-linked parallax */}
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
             {[
               { value: "50+", label: "Royal Estates" },
@@ -134,38 +153,41 @@ const Index = () => {
               { value: "∞", label: "Legacy Value" },
             ].map((stat, index) => (
               <StaggerItem key={index}>
-                <motion.div 
-                  className="text-center p-5 md:p-6 border border-primary/20 bg-card/80 backdrop-blur-sm shadow-soft relative overflow-hidden group"
-                  whileHover={{ 
-                    y: -8, 
-                    boxShadow: "0 20px 40px -15px hsla(42, 55%, 50%, 0.3)" 
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  
-                  <div className="font-royal text-2xl md:text-3xl text-primary mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="font-body text-xs text-muted-foreground tracking-wider uppercase">
-                    {stat.label}
-                  </div>
-                </motion.div>
+                <ScrollLinkedReveal parallaxIntensity={0.1 + index * 0.05}>
+                  <motion.div 
+                    className="text-center p-5 md:p-6 border border-primary/20 bg-card/80 backdrop-blur-sm shadow-soft relative overflow-hidden group"
+                    whileHover={{ 
+                      y: -8, 
+                      boxShadow: "0 20px 40px -15px hsla(42, 55%, 50%, 0.3)" 
+                    }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    {/* Shimmer effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                    
+                    <div className="font-royal text-2xl md:text-3xl text-primary mb-1">
+                      {stat.value}
+                    </div>
+                    <div className="font-body text-xs text-muted-foreground tracking-wider uppercase">
+                      {stat.label}
+                    </div>
+                  </motion.div>
+                </ScrollLinkedReveal>
               </StaggerItem>
             ))}
           </StaggerContainer>
         </div>
       </ParallaxSection>
 
-      {/* Heritage Section with Parallax Background */}
+      {/* Heritage Section with Enhanced Parallax Background */}
       <ParallaxSection 
         id="heritage" 
         className="relative py-20 text-sand overflow-hidden"
         backgroundImage={property1}
         overlayColor="hsla(8, 27%, 12%, 0.92)"
-        speed={0.4}
+        speed={0.5}
         scale
+        smoothness={50}
       >
         {/* Additional overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-espresso/50 via-transparent to-espresso/70 z-[1]" />
@@ -175,13 +197,15 @@ const Index = () => {
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <ScrollReveal direction="left">
-              <ParallaxFloat speed={0.15} direction="up">
+            <SmoothScrollReveal direction="left" distance={80} blur>
+              <FloatingElement intensity={0.12} direction="vertical">
                 <CalligraphyAccent className="mb-4 w-28 h-7" />
-              </ParallaxFloat>
-              <h2 className="text-3xl md:text-5xl font-royal mb-5 text-gold">
-                A Legacy of Distinction
-              </h2>
+              </FloatingElement>
+              <MaskReveal direction="left" delay={0.15}>
+                <h2 className="text-3xl md:text-5xl font-royal mb-5 text-gold">
+                  A Legacy of Distinction
+                </h2>
+              </MaskReveal>
               <p className="font-body text-base md:text-lg text-sand/80 leading-relaxed mb-5">
                 For over two decades, Royal Gulf Estates has been the trusted custodian 
                 of the Arabian Peninsula's most extraordinary properties.
@@ -195,10 +219,10 @@ const Index = () => {
                   Our Story
                 </RoyalButton>
               </MagneticButton>
-            </ScrollReveal>
+            </SmoothScrollReveal>
             
-            <ScrollReveal direction="right" delay={0.2}>
-              <ParallaxFloat speed={0.25} direction="down" className="relative">
+            <SmoothScrollReveal direction="right" delay={0.2} distance={80} blur>
+              <FloatingElement intensity={0.2} direction="both" className="relative">
                 {/* Decorative element with overlapping text */}
                 <motion.div 
                   className="aspect-square bg-gradient-to-br from-gold/20 to-bronze/10 border-2 border-gold/30 shadow-gold flex items-center justify-center backdrop-blur-sm"
@@ -236,37 +260,43 @@ const Index = () => {
                     Est. 1999
                   </span>
                 </motion.div>
-              </ParallaxFloat>
-            </ScrollReveal>
+              </FloatingElement>
+            </SmoothScrollReveal>
           </div>
         </div>
       </ParallaxSection>
 
-      {/* Contact Section with Subtle Parallax */}
+      {/* Contact Section with Enhanced Smooth Parallax */}
       <ParallaxSection 
         id="contact" 
         className="relative py-20 overflow-hidden"
-        speed={0.2}
+        speed={0.25}
+        smoothness={60}
       >
         {/* Gradient connection to next section */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-espresso-dark" />
         
-        {/* Floating decorative elements */}
-        <ParallaxFloat speed={0.3} direction="left" className="absolute top-20 right-20 opacity-20">
+        {/* Floating decorative elements with smooth parallax */}
+        <FloatingElement intensity={0.25} direction="horizontal" className="absolute top-20 right-20 opacity-20">
           <div className="w-40 h-40 border border-gold/30 rounded-full" />
-        </ParallaxFloat>
-        <ParallaxFloat speed={0.4} direction="right" className="absolute bottom-20 left-20 opacity-20">
+        </FloatingElement>
+        <FloatingElement intensity={0.35} direction="horizontal" className="absolute bottom-20 left-20 opacity-20">
           <div className="w-24 h-24 border border-bronze/30 rotate-45" />
-        </ParallaxFloat>
+        </FloatingElement>
+        <FloatingElement intensity={0.2} direction="vertical" className="absolute top-1/2 left-1/4 opacity-10">
+          <div className="w-32 h-32 bg-gradient-radial from-gold/20 to-transparent rounded-full blur-3xl" />
+        </FloatingElement>
         
         <div className="container mx-auto px-6 text-center max-w-3xl relative z-10">
-          <ScrollReveal>
-            <ParallaxFloat speed={0.15} direction="up">
+          <SmoothScrollReveal direction="up" distance={60} blur>
+            <FloatingElement intensity={0.1} direction="vertical">
               <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
-            </ParallaxFloat>
-            <h2 className="text-3xl md:text-4xl font-royal mb-5 text-shimmer">
-              Begin Your Journey
-            </h2>
+            </FloatingElement>
+            <MaskReveal direction="up" delay={0.1}>
+              <h2 className="text-3xl md:text-4xl font-royal mb-5 text-shimmer">
+                Begin Your Journey
+              </h2>
+            </MaskReveal>
             <p className="font-body text-base md:text-lg text-muted-foreground leading-relaxed mb-8">
               Every exceptional estate begins with a conversation. 
               Allow our dedicated team to guide you toward your royal residence.
@@ -288,7 +318,7 @@ const Index = () => {
                 Discretion Assured · By Appointment Only · Dubai · Abu Dhabi · Doha
               </p>
             </motion.div>
-          </ScrollReveal>
+          </SmoothScrollReveal>
         </div>
       </ParallaxSection>
 
