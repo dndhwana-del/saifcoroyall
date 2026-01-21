@@ -1,14 +1,24 @@
 import { motion } from "framer-motion";
+import { Suspense, lazy } from "react";
 import heroPalace from "@/assets/hero-palace.jpg";
 import CalligraphyAccent from "./CalligraphyAccent";
 import RoyalButton from "./RoyalButton";
 import GoldenArchway from "./GoldenArchway";
 import RoyalDivider from "./RoyalDivider";
 import MagneticButton from "./MagneticButton";
+
+// Lazy load the heavy 3D component
+const GoldParticles = lazy(() => import("./GoldParticles"));
+
 const HeroSection = () => {
   return <section className="relative min-h-[110vh] flex items-center justify-center pt-20 pb-32 overflow-hidden">
       {/* Continuous background - no hard cuts */}
       <div className="absolute inset-0 bg-background" />
+      
+      {/* 3D Gold Particle System */}
+      <Suspense fallback={<div className="absolute inset-0 bg-gradient-to-b from-transparent to-espresso/20" />}>
+        <GoldParticles />
+      </Suspense>
       
       {/* Warm ambient glow overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent z-10" />

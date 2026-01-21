@@ -4,6 +4,7 @@ import { Bed, Bath, Maximize2 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import CalligraphyAccent from "./CalligraphyAccent";
 import PropertyDetailModal from "./PropertyDetailModal";
+import { useAudio } from "./AudioProvider";
 
 // Stagger reveal animation variants
 const containerVariants = {
@@ -64,12 +65,18 @@ const PropertyCard = ({
   onClick: () => void;
 }) => {
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const { playHoverSound } = useAudio();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     setMousePos({ x, y });
+  };
+
+  const handleHover = () => {
+    onHover();
+    playHoverSound();
   };
 
   // Calculate 3D tilt based on mouse position
@@ -87,7 +94,7 @@ const PropertyCard = ({
         transformStyle: "preserve-3d",
       }}
       transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
-      onMouseEnter={onHover}
+      onMouseEnter={handleHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
       onClick={onClick}

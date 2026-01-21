@@ -18,6 +18,7 @@ import MegaFooter from "@/components/MegaFooter";
 import PropertyCarousel from "@/components/PropertyCarousel";
 import MagneticButton from "@/components/MagneticButton";
 import ParallaxSection, { ParallaxFloat, ParallaxLayers, HorizontalParallax } from "@/components/ParallaxSection";
+import { AudioToggle, useAudio } from "@/components/AudioProvider";
 
 const properties = [
   { image: property1, title: "Al Qasr Palace", location: "Emirates Hills, Dubai", price: "AED 185M", bedrooms: 12, bathrooms: 15, area: "45,000 sqft" },
@@ -103,10 +104,14 @@ const Index = () => {
             ))}
           </motion.div>
           <motion.div
+            className="flex items-center gap-4"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
+            {/* Audio Toggle */}
+            <AudioToggle />
+            
             <MagneticButton strength={0.3}>
               <RoyalButton variant="secondary" size="sm">
                 Enquire
