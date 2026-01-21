@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
@@ -11,6 +12,7 @@ import LocationsSection from "@/components/LocationsSection";
 import MegaFooter from "@/components/MegaFooter";
 import PropertyCarousel from "@/components/PropertyCarousel";
 import MagneticButton from "@/components/MagneticButton";
+import ParallaxSection, { ParallaxFloat, ParallaxLayers } from "@/components/ParallaxSection";
 
 const properties = [
   { image: property1, title: "Al Qasr Palace", location: "Emirates Hills, Dubai", price: "AED 185M", bedrooms: 12, bathrooms: 15, area: "45,000 sqft" },
@@ -21,10 +23,34 @@ const properties = [
 ];
 
 const Index = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Global parallax for decorative elements
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const decorY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Continuous Mashrabiya Pattern - flows through entire site */}
-      <div className="fixed inset-0 mashrabiya-pattern pointer-events-none z-0" />
+    <div ref={containerRef} className="min-h-screen bg-background relative">
+      {/* Continuous Mashrabiya Pattern with Parallax */}
+      <motion.div 
+        className="fixed inset-0 mashrabiya-pattern pointer-events-none z-0"
+        style={{ y: bgY }}
+      />
+      
+      {/* Floating Decorative Elements */}
+      <motion.div 
+        className="fixed top-1/4 right-10 w-32 h-32 border border-gold/10 rounded-full pointer-events-none z-0"
+        style={{ y: decorY }}
+      />
+      <motion.div 
+        className="fixed bottom-1/3 left-10 w-20 h-20 border border-bronze/10 rotate-45 pointer-events-none z-0"
+        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]) }}
+      />
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-lg border-b border-primary/10">
@@ -80,11 +106,17 @@ const Index = () => {
       {/* Property Carousel - Overlaps hero with negative margin */}
       <PropertyCarousel properties={properties} />
 
-      {/* Stats Section - Overlapping design */}
-      <section id="estates" className="relative -mt-8 py-16 z-10">
-        <div className="container mx-auto px-6">
+      {/* Stats Section with Parallax Layers */}
+      <ParallaxSection 
+        id="estates" 
+        className="relative -mt-8 py-16 z-10"
+      >
+        <ParallaxLayers />
+        <div className="container mx-auto px-6 relative z-10">
           <ScrollReveal className="text-center max-w-3xl mx-auto mb-12">
-            <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
+            <ParallaxFloat speed={0.2} direction="up">
+              <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
+            </ParallaxFloat>
             <h2 className="text-3xl md:text-4xl font-royal mb-4 text-shimmer">
               Exceptional Estates
             </h2>
@@ -124,17 +156,29 @@ const Index = () => {
             ))}
           </StaggerContainer>
         </div>
-      </section>
+      </ParallaxSection>
 
-      {/* Heritage Section - Text overlapping decorative element */}
-      <section id="heritage" className="relative py-20 bg-espresso text-sand overflow-hidden">
+      {/* Heritage Section with Parallax Background */}
+      <ParallaxSection 
+        id="heritage" 
+        className="relative py-20 text-sand overflow-hidden"
+        backgroundImage={property1}
+        overlayColor="hsla(8, 27%, 12%, 0.92)"
+        speed={0.4}
+        scale
+      >
+        {/* Additional overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-espresso/50 via-transparent to-espresso/70 z-[1]" />
+        
         {/* Pattern continuation */}
-        <div className="absolute inset-0 mashrabiya-pattern opacity-30" />
+        <div className="absolute inset-0 mashrabiya-pattern opacity-20 z-[2]" />
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <ScrollReveal direction="left">
-              <CalligraphyAccent className="mb-4 w-28 h-7" />
+              <ParallaxFloat speed={0.15} direction="up">
+                <CalligraphyAccent className="mb-4 w-28 h-7" />
+              </ParallaxFloat>
               <h2 className="text-3xl md:text-5xl font-royal mb-5 text-gold">
                 A Legacy of Distinction
               </h2>
@@ -154,10 +198,10 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal direction="right" delay={0.2}>
-              <div className="relative">
+              <ParallaxFloat speed={0.25} direction="down" className="relative">
                 {/* Decorative element with overlapping text */}
                 <motion.div 
-                  className="aspect-square bg-gradient-to-br from-gold/20 to-bronze/10 border-2 border-gold/30 shadow-gold flex items-center justify-center"
+                  className="aspect-square bg-gradient-to-br from-gold/20 to-bronze/10 border-2 border-gold/30 shadow-gold flex items-center justify-center backdrop-blur-sm"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}
                 >
@@ -177,13 +221,13 @@ const Index = () => {
                   </div>
                 </motion.div>
                 
-                {/* Overlapping corners */}
+                {/* Overlapping corners with parallax */}
                 <div className="absolute -top-4 -right-4 w-20 h-20 border-t-2 border-r-2 border-gold/50" />
                 <div className="absolute -bottom-4 -left-4 w-20 h-20 border-b-2 border-l-2 border-gold/50" />
                 
                 {/* Floating label that overlaps */}
                 <motion.div 
-                  className="absolute -bottom-6 -right-6 md:-right-10 bg-gold px-6 py-3 shadow-lg"
+                  className="absolute -bottom-6 -right-6 md:-right-10 bg-gold px-6 py-3 shadow-lg z-20"
                   initial={{ x: 20, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -192,20 +236,34 @@ const Index = () => {
                     Est. 1999
                   </span>
                 </motion.div>
-              </div>
+              </ParallaxFloat>
             </ScrollReveal>
           </div>
         </div>
-      </section>
+      </ParallaxSection>
 
-      {/* Contact Section - Floating card design */}
-      <section id="contact" className="relative py-20 overflow-hidden">
+      {/* Contact Section with Subtle Parallax */}
+      <ParallaxSection 
+        id="contact" 
+        className="relative py-20 overflow-hidden"
+        speed={0.2}
+      >
         {/* Gradient connection to next section */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-espresso-dark" />
         
+        {/* Floating decorative elements */}
+        <ParallaxFloat speed={0.3} direction="left" className="absolute top-20 right-20 opacity-20">
+          <div className="w-40 h-40 border border-gold/30 rounded-full" />
+        </ParallaxFloat>
+        <ParallaxFloat speed={0.4} direction="right" className="absolute bottom-20 left-20 opacity-20">
+          <div className="w-24 h-24 border border-bronze/30 rotate-45" />
+        </ParallaxFloat>
+        
         <div className="container mx-auto px-6 text-center max-w-3xl relative z-10">
           <ScrollReveal>
-            <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
+            <ParallaxFloat speed={0.15} direction="up">
+              <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
+            </ParallaxFloat>
             <h2 className="text-3xl md:text-4xl font-royal mb-5 text-shimmer">
               Begin Your Journey
             </h2>
@@ -232,7 +290,7 @@ const Index = () => {
             </motion.div>
           </ScrollReveal>
         </div>
-      </section>
+      </ParallaxSection>
 
       {/* Locations Section */}
       <LocationsSection />
