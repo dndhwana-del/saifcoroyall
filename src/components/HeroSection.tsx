@@ -110,7 +110,7 @@ const HeroSection = () => {
               </RoyalButton>
             </MagneticButton>
             <MagneticButton strength={0.4}>
-              <RoyalButton variant="outline" size="lg" className="border-sand/50 text-sand hover:bg-sand hover:text-espresso">
+              <RoyalButton variant="secondary" size="lg">
                 Private Consultation
               </RoyalButton>
             </MagneticButton>

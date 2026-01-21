@@ -191,7 +191,7 @@ const Index = () => {
                 it is the beginning of a legacy that will endure for generations.
               </p>
               <MagneticButton strength={0.3}>
-                <RoyalButton variant="outline" className="border-gold text-gold hover:bg-gold hover:text-espresso">
+                <RoyalButton variant="secondary">
                   Our Story
                 </RoyalButton>
               </MagneticButton>
