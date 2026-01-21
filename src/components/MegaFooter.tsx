@@ -108,16 +108,14 @@ const MegaFooter = () => {
             {/* Social Icons */}
             <div className="flex items-center gap-4">
               {socialLinks.map((social) => (
-                <motion.a
+                <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 border border-bronze/40 flex items-center justify-center text-bronze hover:text-gold hover:border-gold hover:bg-gold/10 transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="w-10 h-10 border border-bronze/40 flex items-center justify-center text-bronze hover:text-gold hover:border-gold hover:bg-gold/10 transition-all duration-700"
                 >
                   <social.icon size={18} strokeWidth={1.5} />
-                </motion.a>
+                </a>
               ))}
             </div>
           </div>
