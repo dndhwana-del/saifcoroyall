@@ -87,6 +87,15 @@ const LocationsSection = () => {
                     viewBox="0 0 800 450" 
                     preserveAspectRatio="none"
                   >
+                    <defs>
+                      {/* Gradient for connecting lines */}
+                      <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="hsl(42, 55%, 58%)" stopOpacity="0" />
+                        <stop offset="50%" stopColor="hsl(42, 55%, 58%)" stopOpacity="0.6" />
+                        <stop offset="100%" stopColor="hsl(42, 55%, 58%)" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    
                     <path
                       d="M0,200 Q100,180 200,220 T400,200 T600,240 T800,200 L800,450 L0,450 Z"
                       fill="hsl(var(--bronze) / 0.15)"
@@ -98,6 +107,44 @@ const LocationsSection = () => {
                       fill="hsl(var(--bronze) / 0.1)"
                       stroke="hsl(var(--bronze) / 0.25)"
                       strokeWidth="0.5"
+                    />
+                    
+                    {/* Connecting lines between markers - subtle network effect */}
+                    <motion.path
+                      d="M200,157 Q350,180 440,202"
+                      fill="none"
+                      stroke="url(#lineGradient)"
+                      strokeWidth="0.5"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.4 }}
+                      transition={{ duration: 2, delay: 1 }}
+                    />
+                    <motion.path
+                      d="M440,202 Q500,150 544,126"
+                      fill="none"
+                      stroke="url(#lineGradient)"
+                      strokeWidth="0.5"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.4 }}
+                      transition={{ duration: 2, delay: 1.3 }}
+                    />
+                    <motion.path
+                      d="M544,126 Q600,200 624,292"
+                      fill="none"
+                      stroke="url(#lineGradient)"
+                      strokeWidth="0.5"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.4 }}
+                      transition={{ duration: 2, delay: 1.6 }}
+                    />
+                    <motion.path
+                      d="M200,157 Q400,250 624,292"
+                      fill="none"
+                      stroke="url(#lineGradient)"
+                      strokeWidth="0.5"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.3 }}
+                      transition={{ duration: 2.5, delay: 1.9 }}
                     />
                   </svg>
 
