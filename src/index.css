@@ -79,13 +79,6 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-  }
-
-  /* Snap scroll sections */
-  .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
 
   body {
