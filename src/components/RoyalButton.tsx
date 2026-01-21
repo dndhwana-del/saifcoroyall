@@ -30,25 +30,25 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
           overflow-hidden
           
           /* Crystal glass surface */
-          bg-gradient-to-b from-[#D4AF37]/20 via-[#C9A227]/10 to-[#B8960F]/15
+          bg-gradient-to-b from-[#D4AF37]/25 via-[#C9A227]/15 to-[#B8960F]/20
           backdrop-blur-md
           
-          /* Gold glowing border */
-          border border-[#D4AF37]/60
-          shadow-[0_0_15px_rgba(212,175,55,0.3),inset_0_1px_1px_rgba(255,255,255,0.2)]
+          /* Intense gold glowing border */
+          border border-[#D4AF37]/80
+          shadow-[0_0_20px_rgba(212,175,55,0.5),0_0_40px_rgba(212,175,55,0.2),inset_0_1px_2px_rgba(255,255,255,0.3)]
           
-          /* Text styling */
+          /* Text styling with stronger glow */
           text-[#F5E6C8]
-          [text-shadow:0_0_10px_rgba(212,175,55,0.5)]
+          [text-shadow:0_0_12px_rgba(212,175,55,0.7),0_0_24px_rgba(212,175,55,0.3)]
           
           /* Smooth transitions */
           transition-all duration-500 ease-out
           
-          /* 3D hover lift */
-          hover:translate-y-[-3px]
-          hover:shadow-[0_8px_30px_rgba(212,175,55,0.5),0_0_20px_rgba(212,175,55,0.4),inset_0_1px_2px_rgba(255,255,255,0.3)]
-          hover:border-[#D4AF37]
-          hover:bg-gradient-to-b hover:from-[#D4AF37]/30 hover:via-[#C9A227]/20 hover:to-[#B8960F]/25
+          /* 3D hover lift with intense glow */
+          hover:translate-y-[-4px]
+          hover:shadow-[0_10px_40px_rgba(212,175,55,0.6),0_0_30px_rgba(212,175,55,0.5),0_0_60px_rgba(212,175,55,0.25),inset_0_1px_3px_rgba(255,255,255,0.4)]
+          hover:border-[#F5D76E]
+          hover:bg-gradient-to-b hover:from-[#D4AF37]/40 hover:via-[#C9A227]/25 hover:to-[#B8960F]/30
           
           /* Active press effect */
           active:translate-y-[1px]
