@@ -1,16 +1,18 @@
-import heroPalace from "@/assets/hero-palace.jpg";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
 import CalligraphyAccent from "@/components/CalligraphyAccent";
 import RoyalButton from "@/components/RoyalButton";
-import GoldenArchway from "@/components/GoldenArchway";
-import RoyalDivider from "@/components/RoyalDivider";
 import PropertyCard from "@/components/PropertyCard";
 import ScrollReveal from "@/components/ScrollReveal";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
+import HeroSection from "@/components/HeroSection";
+import LocationsSection from "@/components/LocationsSection";
+import MegaFooter from "@/components/MegaFooter";
+
 const Index = () => {
-  return <div className="min-h-screen bg-background mashrabiya-pattern">
+  return (
+    <div className="min-h-screen bg-background mashrabiya-pattern">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-primary/10">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
@@ -40,72 +42,9 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section - The Grand Lobby */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        {/* Warm ambient glow overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/90 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 z-10" />
-        
-        {/* Golden hour vignette */}
-        <div className="absolute inset-0 shadow-[inset_0_0_200px_60px_hsla(42,55%,58%,0.08)] z-10 pointer-events-none" />
+      {/* Hero Section */}
+      <HeroSection />
 
-        {/* Hero Image with Archway Frame */}
-        <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16">
-          <GoldenArchway className="w-full max-w-6xl h-[70vh] md:h-[80vh]">
-            <div className="relative w-full h-full overflow-hidden rounded-t-archway">
-              <img src={heroPalace} alt="Luxurious Arabian Gulf Palace Interior" className="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-[2s]" />
-              {/* Warm overlay on image */}
-              <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 via-espresso/20 to-transparent" />
-            </div>
-          </GoldenArchway>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-20 container mx-auto px-6 text-center">
-          <div className="max-w-4xl mx-auto">
-            {/* Arabic Calligraphy Element */}
-            <div className="opacity-0 animate-fade-in-up mb-6">
-              <CalligraphyAccent className="mx-auto w-48 h-12" />
-            </div>
-            
-            {/* Main Title */}
-            <h1 className="opacity-0 animate-fade-in-up animation-delay-200 text-4xl md:text-6xl lg:text-7xl font-royal leading-tight mb-6 text-shimmer">
-              Royal Gulf Estates
-            </h1>
-
-            {/* Subtitle */}
-            <p className="opacity-0 animate-fade-in-up animation-delay-400 font-display text-xl md:text-2xl text-foreground/80 mb-4 italic">
-              Where Heritage Meets Magnificence
-            </p>
-
-            <RoyalDivider className="opacity-0 animate-fade-in-up animation-delay-400" />
-
-            {/* Description */}
-            <p className="opacity-0 animate-fade-in-up animation-delay-600 font-body text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed text-gray-50">
-              Discover an exclusive collection of palatial residences, 
-              curated for those who seek the pinnacle of Arabian luxury and timeless elegance.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="opacity-0 animate-fade-in-up animation-delay-800 flex flex-col sm:flex-row gap-4 justify-center">
-              <RoyalButton size="lg">
-                View Collection
-              </RoyalButton>
-              <RoyalButton variant="outline" size="lg">
-                Private Consultation
-              </RoyalButton>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 opacity-0 animate-fade-in-up animation-delay-800">
-          <div className="flex flex-col items-center gap-2 text-primary/60">
-            <span className="font-body text-xs tracking-[0.3em] uppercase">Explore</span>
-            <div className="w-px h-12 bg-gradient-to-b from-primary/60 to-transparent animate-float" />
-          </div>
-        </div>
-      </section>
 
       {/* Featured Section - Stats */}
       <section className="relative py-24 bg-card mashrabiya-pattern">
@@ -254,22 +193,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-espresso text-sand py-12 border-t border-gold/20">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <CalligraphyAccent className="w-16 h-5" />
-              <span className="font-royal text-lg tracking-[0.2em] text-gold">
-                ROYAL GULF
-              </span>
-            </div>
-            <p className="font-body text-sm text-sand/60">
-              © 2024 Royal Gulf Estates. All Rights Reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>;
+      {/* Locations Section */}
+      <LocationsSection />
+
+      {/* Mega Footer */}
+      <MegaFooter />
+    </div>
+  );
 };
+
 export default Index;
