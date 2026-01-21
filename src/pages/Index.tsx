@@ -7,10 +7,8 @@ import RoyalButton from "@/components/RoyalButton";
 import GoldenArchway from "@/components/GoldenArchway";
 import RoyalDivider from "@/components/RoyalDivider";
 import PropertyCard from "@/components/PropertyCard";
-
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-background mashrabiya-pattern">
+  return <div className="min-h-screen bg-background mashrabiya-pattern">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-primary/10">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
@@ -53,11 +51,7 @@ const Index = () => {
         <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16">
           <GoldenArchway className="w-full max-w-6xl h-[70vh] md:h-[80vh]">
             <div className="relative w-full h-full overflow-hidden rounded-t-archway">
-              <img
-                src={heroPalace}
-                alt="Luxurious Arabian Gulf Palace Interior"
-                className="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-[2s]"
-              />
+              <img src={heroPalace} alt="Luxurious Arabian Gulf Palace Interior" className="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-[2s]" />
               {/* Warm overlay on image */}
               <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 via-espresso/20 to-transparent" />
             </div>
@@ -85,7 +79,7 @@ const Index = () => {
             <RoyalDivider className="opacity-0 animate-fade-in-up animation-delay-400" />
 
             {/* Description */}
-            <p className="opacity-0 animate-fade-in-up animation-delay-600 font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="opacity-0 animate-fade-in-up animation-delay-600 font-body text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed text-gray-50">
               Discover an exclusive collection of palatial residences, 
               curated for those who seek the pinnacle of Arabian luxury and timeless elegance.
             </p>
@@ -127,21 +121,26 @@ const Index = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {[
-              { value: "50+", label: "Royal Estates" },
-              { value: "25", label: "Years of Excellence" },
-              { value: "100%", label: "Private & Exclusive" },
-              { value: "∞", label: "Legacy Value" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center p-6 border border-primary/20 bg-background/50 shadow-soft">
+            {[{
+            value: "50+",
+            label: "Royal Estates"
+          }, {
+            value: "25",
+            label: "Years of Excellence"
+          }, {
+            value: "100%",
+            label: "Private & Exclusive"
+          }, {
+            value: "∞",
+            label: "Legacy Value"
+          }].map((stat, index) => <div key={index} className="text-center p-6 border border-primary/20 bg-background/50 shadow-soft">
                 <div className="font-royal text-3xl md:text-4xl text-primary mb-2">
                   {stat.value}
                 </div>
                 <div className="font-body text-sm text-muted-foreground tracking-wider uppercase">
                   {stat.label}
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -162,33 +161,9 @@ const Index = () => {
 
           {/* Property Cards Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <PropertyCard
-              image={property1}
-              title="Al Qasr Palace"
-              location="Emirates Hills, Dubai"
-              price="AED 185M"
-              bedrooms={12}
-              bathrooms={15}
-              area="45,000 sqft"
-            />
-            <PropertyCard
-              image={property2}
-              title="Pearl Bay Estate"
-              location="The Pearl, Doha"
-              price="AED 142M"
-              bedrooms={9}
-              bathrooms={12}
-              area="38,000 sqft"
-            />
-            <PropertyCard
-              image={property3}
-              title="Skyline Majlis"
-              location="Downtown, Dubai"
-              price="AED 98M"
-              bedrooms={6}
-              bathrooms={8}
-              area="22,000 sqft"
-            />
+            <PropertyCard image={property1} title="Al Qasr Palace" location="Emirates Hills, Dubai" price="AED 185M" bedrooms={12} bathrooms={15} area="45,000 sqft" />
+            <PropertyCard image={property2} title="Pearl Bay Estate" location="The Pearl, Doha" price="AED 142M" bedrooms={9} bathrooms={12} area="38,000 sqft" />
+            <PropertyCard image={property3} title="Skyline Majlis" location="Downtown, Dubai" price="AED 98M" bedrooms={6} bathrooms={8} area="22,000 sqft" />
           </div>
 
           {/* View All Button */}
@@ -279,8 +254,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
