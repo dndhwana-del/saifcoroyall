@@ -64,6 +64,16 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
         {/* Inner crystal reflection layer */}
         <span className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-50 pointer-events-none" />
         
+        {/* Continuous subtle shimmer animation */}
+        <span 
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%, transparent 100%)',
+            backgroundSize: '200% 100%',
+            animation: 'buttonShimmer 4s ease-in-out infinite',
+          }}
+        />
+        
         {/* Light sweep effect on hover */}
         <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out pointer-events-none" />
         
