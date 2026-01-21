@@ -6,10 +6,15 @@ interface LocationMarker {
   name: string;
   position: { top: string; left: string };
   description: string;
+  vibe?: string;
   avgPrice: string;
   properties: number;
   availableUnits: number;
   backgroundImage: string;
+  category?: string[];
+  city?: string;
+  isHub?: boolean;
+  parentHub?: string;
   highlights?: string[];
   propertyTypes?: string[];
 }
