@@ -1,5 +1,4 @@
 import { Bed, Bath, Key } from "lucide-react";
-
 interface PropertyCardProps {
   image: string;
   title: string;
@@ -9,7 +8,6 @@ interface PropertyCardProps {
   bathrooms: number;
   area: string;
 }
-
 const PropertyCard = ({
   image,
   title,
@@ -17,10 +15,9 @@ const PropertyCard = ({
   price,
   bedrooms,
   bathrooms,
-  area,
+  area
 }: PropertyCardProps) => {
-  return (
-    <article className="group relative bg-cardstock transition-all duration-500 ease-out hover:-translate-y-3 hover:shadow-[0_20px_60px_-10px_hsla(42,55%,50%,0.35)]">
+  return <article className="group relative bg-cardstock transition-all duration-500 ease-out hover:-translate-y-3 hover:shadow-[0_20px_60px_-10px_hsla(42,55%,50%,0.35)]">
       {/* Double Border - Outer */}
       <div className="absolute inset-0 border border-bronze/30" />
       
@@ -28,15 +25,11 @@ const PropertyCard = ({
       <div className="absolute inset-[4px] border border-bronze/50" />
 
       {/* Content Container */}
-      <div className="relative p-[4px]">
+      <div className="relative p-[4px] border-primary-foreground border shadow-royal">
         {/* Image with Arch Shape */}
         <div className="relative overflow-hidden rounded-t-[50%_20%] mx-[4px] mt-[4px]">
           <div className="aspect-[4/3] overflow-hidden">
-            <img
-              src={image}
-              alt={title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+            <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             {/* Vignette Shadow */}
             <div className="absolute inset-0 shadow-[inset_0_0_40px_10px_rgba(62,39,35,0.3)]" />
             {/* Bottom gradient for blend */}
@@ -69,31 +62,19 @@ const PropertyCard = ({
           {/* Amenities with Engraved Icons */}
           <div className="flex items-center gap-6 mb-5">
             <div className="flex items-center gap-2">
-              <Bed 
-                size={18} 
-                strokeWidth={1} 
-                className="text-bronze" 
-              />
+              <Bed size={18} strokeWidth={1} className="text-bronze" />
               <span className="font-body text-sm text-foreground/70">
                 {bedrooms} Beds
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Bath 
-                size={18} 
-                strokeWidth={1} 
-                className="text-bronze" 
-              />
+              <Bath size={18} strokeWidth={1} className="text-bronze" />
               <span className="font-body text-sm text-foreground/70">
                 {bathrooms} Baths
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Key 
-                size={18} 
-                strokeWidth={1} 
-                className="text-bronze" 
-              />
+              <Key size={18} strokeWidth={1} className="text-bronze" />
               <span className="font-body text-sm text-foreground/70">
                 {area}
               </span>
@@ -118,8 +99,6 @@ const PropertyCard = ({
           </span>
         </div>
       </div>
-    </article>
-  );
+    </article>;
 };
-
 export default PropertyCard;
