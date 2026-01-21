@@ -50,18 +50,23 @@ const PropertyCard = ({
         {/* Image with Arch Shape */}
         <div className="relative overflow-hidden rounded-t-[50%_20%] mx-[4px] mt-[4px]">
           <div className="aspect-[4/3] overflow-hidden">
-            <motion.img 
-              src={image} 
-              alt={title} 
-              className="w-full h-full object-cover"
+            {/* Image zoom happens on card hover, not image hover */}
+            <motion.div
+              className="w-full h-full"
               initial={{ scale: 1 }}
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
-            />
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+            >
+              <img 
+                src={image} 
+                alt={title} 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+            </motion.div>
             {/* Vignette Shadow */}
-            <div className="absolute inset-0 shadow-[inset_0_0_40px_10px_rgba(62,39,35,0.3)]" />
+            <div className="absolute inset-0 shadow-[inset_0_0_40px_10px_rgba(62,39,35,0.3)] pointer-events-none" />
             {/* Bottom gradient for blend */}
-            <div className="absolute inset-0 bg-gradient-to-t from-cardstock/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-cardstock/80 via-transparent to-transparent pointer-events-none" />
           </div>
           
           {/* Exclusive Badge */}
