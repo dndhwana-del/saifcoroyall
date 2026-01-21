@@ -63,10 +63,6 @@ export default {
           light: "hsl(45, 70%, 70%)",
           dark: "hsl(38, 65%, 45%)",
         },
-        bronze: {
-          DEFAULT: "hsl(38, 65%, 52%)",
-          dark: "hsl(30, 50%, 38%)",
-        },
         sand: {
           DEFAULT: "hsl(45, 50%, 93%)",
           dark: "hsl(43, 45%, 88%)",
