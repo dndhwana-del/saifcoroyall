@@ -76,6 +76,12 @@ export default {
           dark: "hsl(8, 30%, 12%)",
         },
         parchment: "hsl(43, 45%, 91%)",
+        cardstock: "hsl(var(--cardstock))",
+        bronze: {
+          DEFAULT: "hsl(var(--bronze))",
+          light: "hsl(var(--bronze-light))",
+          dark: "hsl(var(--bronze-dark))",
+        },
       },
       fontFamily: {
         royal: ["'Cinzel Decorative'", "'Playfair Display'", "serif"],

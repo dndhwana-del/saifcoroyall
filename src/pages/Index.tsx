@@ -1,8 +1,12 @@
 import heroPalace from "@/assets/hero-palace.jpg";
+import property1 from "@/assets/property-1.jpg";
+import property2 from "@/assets/property-2.jpg";
+import property3 from "@/assets/property-3.jpg";
 import CalligraphyAccent from "@/components/CalligraphyAccent";
 import RoyalButton from "@/components/RoyalButton";
 import GoldenArchway from "@/components/GoldenArchway";
 import RoyalDivider from "@/components/RoyalDivider";
+import PropertyCard from "@/components/PropertyCard";
 
 const Index = () => {
   return (
@@ -107,8 +111,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Section */}
-      <section id="estates" className="relative py-24 bg-card mashrabiya-pattern">
+      {/* Featured Section - Stats */}
+      <section className="relative py-24 bg-card mashrabiya-pattern">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
@@ -138,6 +142,60 @@ const Index = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Royal Collection - Property Cards */}
+      <section id="collection" className="relative py-24 bg-background mashrabiya-pattern">
+        <div className="container mx-auto px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
+            <h2 className="text-3xl md:text-5xl font-royal mb-6 text-shimmer">
+              The Royal Collection
+            </h2>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed">
+              A curated gallery of the Gulf's most distinguished residences, 
+              each a masterpiece of heritage and opulence.
+            </p>
+          </div>
+
+          {/* Property Cards Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <PropertyCard
+              image={property1}
+              title="Al Qasr Palace"
+              location="Emirates Hills, Dubai"
+              price="AED 185M"
+              bedrooms={12}
+              bathrooms={15}
+              area="45,000 sqft"
+            />
+            <PropertyCard
+              image={property2}
+              title="Pearl Bay Estate"
+              location="The Pearl, Doha"
+              price="AED 142M"
+              bedrooms={9}
+              bathrooms={12}
+              area="38,000 sqft"
+            />
+            <PropertyCard
+              image={property3}
+              title="Skyline Majlis"
+              location="Downtown, Dubai"
+              price="AED 98M"
+              bedrooms={6}
+              bathrooms={8}
+              area="22,000 sqft"
+            />
+          </div>
+
+          {/* View All Button */}
+          <div className="text-center mt-16">
+            <RoyalButton variant="secondary" size="lg">
+              Explore Full Collection
+            </RoyalButton>
           </div>
         </div>
       </section>
