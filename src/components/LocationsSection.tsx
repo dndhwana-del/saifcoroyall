@@ -101,25 +101,45 @@ const LocationsSection = () => {
                     />
                   </svg>
 
-                  {/* Location Markers - Static Gold Dots */}
+                  {/* Location Markers with Enhanced Tooltips */}
                   {locations.map((location, index) => (
                     <motion.div
                       key={location.name}
                       className="absolute group cursor-pointer"
                       style={{ top: location.position.top, left: location.position.left }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 + index * 0.15, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
                     >
-                      {/* Static Gold Ring - No pulsing */}
-                      <div className="absolute inset-0 -m-3 rounded-full border border-gold/30" />
+                      {/* Multiple Pulsing Rings - Concentric circles */}
+                      {[1, 2, 3].map((ring) => (
+                        <motion.div
+                          key={ring}
+                          className="absolute inset-0 -m-4 rounded-full border border-gold/40"
+                          animate={{
+                            scale: [1, 2 + ring * 0.5, 1],
+                            opacity: [0.6, 0, 0.6],
+                          }}
+                          transition={{
+                            duration: 2 + ring * 0.2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.2 + ring * 0.15,
+                          }}
+                        />
+                      ))}
                       
-                      {/* Marker Dot - Static */}
-                      <div className="relative w-4 h-4 bg-gold rounded-full shadow-[0_0_15px_3px_hsla(42,55%,58%,0.4)] group-hover:shadow-[0_0_20px_5px_hsla(42,55%,58%,0.6)] transition-shadow duration-700" />
+                      {/* Marker Dot */}
+                      <motion.div 
+                        className="relative w-4 h-4 bg-gold rounded-full shadow-[0_0_25px_6px_hsla(42,55%,58%,0.6)] group-hover:scale-150 transition-transform duration-300"
+                        whileHover={{ scale: 1.5 }}
+                      />
                       
                       {/* Glass Card Tooltip */}
-                      <div 
-                        className="absolute left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none z-30"
+                      <motion.div 
+                        className="absolute left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-30"
+                        initial={{ x: -10 }}
+                        whileHover={{ x: 0 }}
                       >
                         <div className="bg-espresso/98 backdrop-blur-md border border-gold/50 shadow-[0_10px_40px_-10px_hsla(42,55%,50%,0.4)] min-w-[200px]">
                           {/* Glass highlight */}
@@ -160,7 +180,7 @@ const LocationsSection = () => {
                         
                         {/* Arrow */}
                         <div className="absolute left-0 top-1/2 -translate-x-1.5 -translate-y-1/2 w-3 h-3 bg-espresso/98 border-l border-b border-gold/50 rotate-45" />
-                      </div>
+                      </motion.div>
                     </motion.div>
                   ))}
 
@@ -197,19 +217,26 @@ const LocationsSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* Location Legend - Static */}
+        {/* Location Legend */}
         <ScrollReveal delay={0.4} className="mt-10">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             {locations.map((location) => (
-              <div 
+              <motion.div 
                 key={location.name} 
                 className="flex items-center gap-3 group cursor-pointer"
+                whileHover={{ scale: 1.05 }}
               >
-                <div className="w-2.5 h-2.5 bg-gold rounded-full shadow-[0_0_8px_hsla(42,55%,58%,0.5)]" />
-                <span className="font-body text-sm text-sand/60 group-hover:text-gold transition-colors duration-700">
+                <motion.div 
+                  className="w-2.5 h-2.5 bg-gold rounded-full"
+                  animate={{ 
+                    boxShadow: ["0 0 0px hsla(42,55%,58%,0)", "0 0 12px hsla(42,55%,58%,0.8)", "0 0 0px hsla(42,55%,58%,0)"]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <span className="font-body text-sm text-sand/60 group-hover:text-gold transition-colors">
                   {location.name}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </ScrollReveal>

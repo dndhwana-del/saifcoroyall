@@ -14,7 +14,7 @@ const ScrollReveal = ({
   children,
   className = "",
   delay = 0,
-  duration = 1.2, // Slower, more elegant
+  duration = 0.6,
   once = true,
   direction = "up",
 }: ScrollRevealProps) => {
@@ -24,13 +24,13 @@ const ScrollReveal = ({
   const getInitialPosition = () => {
     switch (direction) {
       case "up":
-        return { y: 30, x: 0 }; // Reduced from 40 to 30
+        return { y: 40, x: 0 };
       case "down":
-        return { y: -30, x: 0 };
+        return { y: -40, x: 0 };
       case "left":
-        return { y: 0, x: 30 };
+        return { y: 0, x: 40 };
       case "right":
-        return { y: 0, x: -30 };
+        return { y: 0, x: -40 };
       case "none":
         return { y: 0, x: 0 };
     }
@@ -47,7 +47,7 @@ const ScrollReveal = ({
       transition={{
         duration,
         delay,
-        ease: [0.16, 1, 0.3, 1], // easeOutExpo - gentle drift
+        ease: [0.25, 0.4, 0.25, 1],
       }}
     >
       {children}

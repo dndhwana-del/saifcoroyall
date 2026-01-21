@@ -6,98 +6,71 @@ interface RoyalButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   children: React.ReactNode;
 }
 
-const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(({
-  variant = "primary",
-  size = "md",
-  children,
-  className = "",
-  ...props
-}, ref) => {
-  // Royal Ingot Style - Solid metallic weight
-  const baseStyles = `
-    group
-    relative inline-flex items-center justify-center 
-    font-royal tracking-[0.2em] uppercase
-    rounded-sm
-    overflow-hidden
-    transition-all duration-700 ease-out
-    text-[#F8F5E4]
-  `;
+const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
+  ({ variant = "primary", size = "md", children, className = "", ...props }, ref) => {
+    const baseStyles = `
+      relative inline-flex items-center justify-center 
+      font-royal tracking-[0.2em] uppercase
+      rounded-full
+      backdrop-blur-md
+      border border-[#D4AF37]/70
+      text-[#D4AF37]
+      overflow-hidden
+      transition-all duration-500 ease-out
+      group
+    `;
+    
+    // Glass crystal tube effect - semi-transparent with inner glow
+    const glassEffect = `
+      bg-gradient-to-b from-white/10 via-[#D4AF37]/5 to-white/5
+      shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),inset_0_-1px_1px_rgba(0,0,0,0.1)]
+    `;
 
-  // Solid brushed metallic bronze/gold - no transparency
-  const variants = {
-    primary: "bg-gradient-to-br from-[#D4AF37] via-[#C9A227] to-[#AA8A2D] shadow-[0_4px_12px_rgba(170,138,45,0.4)]",
-    secondary: "bg-gradient-to-br from-[#8B7355] via-[#7A6548] to-[#5C4D3A] shadow-[0_4px_12px_rgba(92,77,58,0.4)]",
-    outline: "bg-gradient-to-br from-[#3E2723] via-[#4A3228] to-[#2C1A12] shadow-[0_4px_12px_rgba(44,26,18,0.5)] border border-[#D4AF37]/40"
-  };
+    const variants = {
+      primary: glassEffect,
+      secondary: "bg-white/5 border-[#D4AF37]/50",
+      outline: "bg-transparent border-[#D4AF37]/80",
+    };
 
-  const sizes = {
-    sm: "px-6 py-2.5 text-xs min-w-[140px]",
-    md: "px-10 py-3.5 text-sm min-w-[180px]",
-    lg: "px-14 py-4 text-base min-w-[220px]"
-  };
+    const sizes = {
+      sm: "px-8 py-2.5 text-xs min-w-[160px]",
+      md: "px-12 py-3.5 text-sm min-w-[200px]",
+      lg: "px-16 py-4.5 text-base min-w-[240px]",
+    };
 
-  return (
-    <button 
-      ref={ref} 
-      className={`
-        ${baseStyles} 
-        ${variants[variant]} 
-        ${sizes[size]} 
-        ${className}
-        hover:shadow-[0_6px_20px_rgba(212,175,55,0.5)]
-      `} 
-      {...props}
-    >
-      {/* Brushed metal texture overlay */}
-      <span 
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          background: `repeating-linear-gradient(
-            115deg,
-            transparent,
-            transparent 1px,
-            rgba(255,255,255,0.03) 1px,
-            rgba(255,255,255,0.03) 2px
-          )`
-        }}
-        aria-hidden="true" 
-      />
-      
-      {/* Metallic sheen sweep on hover */}
-      <span 
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-        style={{
-          background: `linear-gradient(
-            110deg,
-            transparent 20%,
-            rgba(255,255,255,0.15) 40%,
-            rgba(255,255,255,0.25) 50%,
-            rgba(255,255,255,0.15) 60%,
-            transparent 80%
-          )`,
-          transform: 'translateX(-100%)',
-          animation: 'none'
-        }}
-        aria-hidden="true" 
-      />
-      <style>{`
-        .group:hover span[aria-hidden="true"]:last-of-type {
-          animation: sheenSweep 1s ease-out forwards;
-        }
-        @keyframes sheenSweep {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-      `}</style>
-      
-      {/* Text - cream colored for contrast */}
-      <span className="relative z-10 text-center font-royal">
-        {children}
-      </span>
-    </button>
-  );
-});
+    return (
+      <button
+        ref={ref}
+        className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}
+          hover:bg-[#D4AF37]/15 hover:border-[#D4AF37] hover:shadow-[0_0_20px_rgba(212,175,55,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)]
+          hover:scale-[1.02]
+          active:scale-[0.98]
+        `}
+        {...props}
+      >
+        {/* Shine sweep animation on hover */}
+        <span 
+          className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out
+            bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+          aria-hidden="true"
+        />
+        
+        {/* Inner edge highlight for glass effect */}
+        <span 
+          className="absolute inset-[1px] rounded-full pointer-events-none
+            bg-gradient-to-b from-white/10 via-transparent to-transparent"
+          aria-hidden="true"
+        />
+        
+        {/* Text with drop shadow for readability */}
+        <span className="relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">
+          {children}
+        </span>
+      </button>
+    );
+  }
+);
 
 RoyalButton.displayName = "RoyalButton";
+
 export default RoyalButton;
