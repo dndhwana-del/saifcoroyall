@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import heroPalace from "@/assets/hero-palace.jpg";
 import CalligraphyAccent from "./CalligraphyAccent";
 import RoyalButton from "./RoyalButton";
@@ -7,46 +8,71 @@ import RoyalDivider from "./RoyalDivider";
 import MagneticButton from "./MagneticButton";
 
 const HeroSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  // Track scroll progress for this section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax Fade-Out transforms
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.6], [1, 0.95]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]); // Slower parallax movement
+
   return (
-    <section className="relative min-h-[110vh] flex items-center justify-center pt-20 pb-32 overflow-hidden">
+    <section 
+      ref={sectionRef}
+      className="relative min-h-[110vh] flex items-center justify-center pt-20 pb-32 overflow-hidden"
+    >
       {/* Continuous background - no hard cuts */}
       <div className="absolute inset-0 bg-background" />
       
-      {/* Warm ambient glow overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent z-10" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 z-10" />
-      
-      {/* Golden hour vignette */}
-      <div className="absolute inset-0 shadow-[inset_0_0_200px_60px_hsla(42,55%,58%,0.08)] z-10 pointer-events-none" />
+      {/* Parallax Fade-Out Container */}
+      <motion.div
+        className="absolute inset-0"
+        style={{ opacity, scale, y }}
+      >
+        {/* Warm ambient glow overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 z-10" />
+        
+        {/* Golden hour vignette */}
+        <div className="absolute inset-0 shadow-[inset_0_0_200px_60px_hsla(42,55%,58%,0.08)] z-10 pointer-events-none" />
 
-      {/* Hero Image with Archway Frame */}
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16 pb-24">
-        <GoldenArchway className="w-full max-w-6xl h-[75vh] md:h-[85vh]">
-          <div className="relative w-full h-full overflow-hidden rounded-t-archway">
-            {/* Ken Burns Effect - Slow zoom animation */}
-            <motion.img
-              src={heroPalace}
-              alt="Luxurious Arabian Gulf Palace Interior"
-              className="w-full h-full object-cover object-center"
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.15 }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "linear",
-              }}
-            />
-            {/* Warm overlay on image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/40 to-transparent" />
-            {/* Text readability gradient overlay - stronger at bottom */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-          </div>
-        </GoldenArchway>
-      </div>
+        {/* Hero Image with Archway Frame */}
+        <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16 pb-24">
+          <GoldenArchway className="w-full max-w-6xl h-[75vh] md:h-[85vh]">
+            <div className="relative w-full h-full overflow-hidden rounded-t-archway">
+              {/* Ken Burns Effect - Slow zoom animation */}
+              <motion.img
+                src={heroPalace}
+                alt="Luxurious Arabian Gulf Palace Interior"
+                className="w-full h-full object-cover object-center"
+                initial={{ scale: 1 }}
+                animate={{ scale: 1.15 }}
+                transition={{
+                  duration: 25,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "linear",
+                }}
+              />
+              {/* Warm overlay on image */}
+              <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/40 to-transparent" />
+              {/* Text readability gradient overlay - stronger at bottom */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            </div>
+          </GoldenArchway>
+        </div>
+      </motion.div>
 
-      {/* Hero Content */}
-      <div className="relative z-20 container mx-auto px-6 text-center">
+      {/* Hero Content - Also fades with parallax */}
+      <motion.div 
+        className="relative z-20 container mx-auto px-6 text-center"
+        style={{ opacity, y }}
+      >
         <div className="max-w-4xl mx-auto">
           {/* Arabic Calligraphy Element */}
           <motion.div
@@ -116,14 +142,15 @@ const HeroSection = () => {
             </MagneticButton>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Scroll Indicator - positioned to overlap next section visually */}
+      {/* Scroll Indicator - Also fades out */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1.2 }}
         className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20"
+        style={{ opacity }}
       >
         <div className="flex flex-col items-center gap-2 text-gold/80">
           <span className="font-body text-xs tracking-[0.3em] uppercase">Discover</span>
