@@ -57,33 +57,66 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        /* Royal Gulf Palette */
+        gold: {
+          DEFAULT: "hsl(42, 55%, 58%)",
+          light: "hsl(45, 70%, 70%)",
+          dark: "hsl(38, 65%, 45%)",
+        },
+        bronze: {
+          DEFAULT: "hsl(38, 65%, 52%)",
+          dark: "hsl(30, 50%, 38%)",
+        },
+        sand: {
+          DEFAULT: "hsl(45, 50%, 93%)",
+          dark: "hsl(43, 45%, 88%)",
+        },
+        espresso: {
+          DEFAULT: "hsl(8, 27%, 19%)",
+          dark: "hsl(8, 30%, 12%)",
+        },
+        parchment: "hsl(43, 45%, 91%)",
+      },
+      fontFamily: {
+        royal: ["'Cinzel Decorative'", "'Playfair Display'", "serif"],
+        display: ["'Playfair Display'", "Georgia", "serif"],
+        body: ["'Cormorant Garamond'", "'Playfair Display'", "Georgia", "serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        archway: "50% 50% 0 0 / 20% 20% 0 0",
+      },
+      boxShadow: {
+        royal: "0 4px 20px -2px hsla(42, 55%, 40%, 0.15), 0 8px 40px -4px hsla(8, 27%, 19%, 0.1)",
+        gold: "0 4px 30px -4px hsla(42, 55%, 58%, 0.4)",
+        soft: "0 2px 12px -2px hsla(8, 27%, 19%, 0.08)",
+        archway: "inset 0 0 60px hsla(42, 55%, 58%, 0.1)",
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.6" },
+          "50%": { opacity: "1" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 6s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
       },
     },
   },
