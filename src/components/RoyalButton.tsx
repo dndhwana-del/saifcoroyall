@@ -13,23 +13,22 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
       font-royal tracking-[0.2em] uppercase
       rounded-full
       backdrop-blur-md
-      border border-[#D4AF37]/70
+      border border-[#D4AF37]/60
       text-[#D4AF37]
       overflow-hidden
-      transition-all duration-500 ease-out
-      group
+      transition-all duration-700 ease-out
     `;
     
     // Glass crystal tube effect - semi-transparent with inner glow
     const glassEffect = `
       bg-gradient-to-b from-white/10 via-[#D4AF37]/5 to-white/5
-      shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),inset_0_-1px_1px_rgba(0,0,0,0.1)]
+      shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),inset_0_-1px_1px_rgba(0,0,0,0.08)]
     `;
 
     const variants = {
       primary: glassEffect,
-      secondary: "bg-white/5 border-[#D4AF37]/50",
-      outline: "bg-transparent border-[#D4AF37]/80",
+      secondary: "bg-white/5 border-[#D4AF37]/40",
+      outline: "bg-transparent border-[#D4AF37]/70",
     };
 
     const sizes = {
@@ -42,23 +41,14 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
       <button
         ref={ref}
         className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}
-          hover:bg-[#D4AF37]/15 hover:border-[#D4AF37] hover:shadow-[0_0_20px_rgba(212,175,55,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)]
-          hover:scale-[1.02]
-          active:scale-[0.98]
+          hover:bg-[#D4AF37]/12 hover:border-[#D4AF37]/80 hover:shadow-[0_0_25px_rgba(212,175,55,0.25),inset_0_1px_1px_rgba(255,255,255,0.2)]
         `}
         {...props}
       >
-        {/* Shine sweep animation on hover */}
-        <span 
-          className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out
-            bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
-          aria-hidden="true"
-        />
-        
         {/* Inner edge highlight for glass effect */}
         <span 
           className="absolute inset-[1px] rounded-full pointer-events-none
-            bg-gradient-to-b from-white/10 via-transparent to-transparent"
+            bg-gradient-to-b from-white/8 via-transparent to-transparent"
           aria-hidden="true"
         />
         

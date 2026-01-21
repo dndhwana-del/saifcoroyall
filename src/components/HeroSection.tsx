@@ -23,19 +23,11 @@ const HeroSection = () => {
       <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16 pb-24">
         <GoldenArchway className="w-full max-w-6xl h-[75vh] md:h-[85vh]">
           <div className="relative w-full h-full overflow-hidden rounded-t-archway">
-            {/* Ken Burns Effect - Slow zoom animation */}
-            <motion.img
+            {/* Static Hero Image - No Ken Burns */}
+            <img
               src={heroPalace}
               alt="Luxurious Arabian Gulf Palace Interior"
-              className="w-full h-full object-cover object-center"
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.15 }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "linear",
-              }}
+              className="w-full h-full object-cover object-center scale-105"
             />
             {/* Warm overlay on image */}
             <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/40 to-transparent" />
@@ -97,41 +89,33 @@ const HeroSection = () => {
             curated for those who seek the pinnacle of Arabian luxury and timeless elegance.
           </motion.p>
 
-          {/* CTA Buttons with Magnetic Effect */}
+          {/* CTA Buttons - No Magnetic Effect */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
+            transition={{ duration: 1.2, delay: 1, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-            <MagneticButton strength={0.4}>
-              <RoyalButton size="lg" className="[&>span]:drop-shadow-md">
-                View Collection
-              </RoyalButton>
-            </MagneticButton>
-            <MagneticButton strength={0.4}>
-              <RoyalButton variant="outline" size="lg" className="border-sand/50 text-sand hover:bg-sand hover:text-espresso">
-                Private Consultation
-              </RoyalButton>
-            </MagneticButton>
+            <RoyalButton size="lg" className="[&>span]:drop-shadow-md">
+              View Collection
+            </RoyalButton>
+            <RoyalButton variant="outline" size="lg" className="border-sand/50 text-sand hover:bg-sand/90 hover:text-espresso">
+              Private Consultation
+            </RoyalButton>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll Indicator - positioned to overlap next section visually */}
+      {/* Scroll Indicator - Static */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.2 }}
+        transition={{ duration: 1.2, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
         className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20"
       >
         <div className="flex flex-col items-center gap-2 text-gold/80">
           <span className="font-body text-xs tracking-[0.3em] uppercase">Discover</span>
-          <motion.div
-            className="w-px h-16 bg-gradient-to-b from-gold/60 to-transparent"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <div className="w-px h-16 bg-gradient-to-b from-gold/60 to-transparent" />
         </div>
       </motion.div>
     </section>
