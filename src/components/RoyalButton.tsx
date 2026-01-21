@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 
 interface RoyalButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   children: React.ReactNode;
 }
 
@@ -12,7 +12,8 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
     const sizes = {
       sm: "px-6 py-2.5 text-xs",
       md: "px-10 py-3.5 text-sm",
-      lg: "px-14 py-4.5 text-base",
+      lg: "px-16 py-5 text-base",
+      xl: "px-20 py-6 text-lg",
     };
 
     const variantStyles = {
