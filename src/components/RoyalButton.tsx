@@ -1,5 +1,6 @@
 import { forwardRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useAudio } from "./AudioProvider";
 
 interface RoyalButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline";
@@ -12,6 +13,7 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
     const [isPressed, setIsPressed] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [sheenActive, setSheenActive] = useState(false);
+    const { playHoverSound, playClickSound } = useAudio();
 
     // Periodic sheen animation every 4 seconds
     useEffect(() => {
@@ -93,12 +95,18 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
           duration: 0.6,
           ease: [0.25, 0.46, 0.45, 0.94],
         }}
-        onMouseEnter={() => setIsHovered(true)}
+        onMouseEnter={() => {
+          setIsHovered(true);
+          playHoverSound();
+        }}
         onMouseLeave={() => {
           setIsHovered(false);
           setIsPressed(false);
         }}
-        onMouseDown={() => setIsPressed(true)}
+        onMouseDown={() => {
+          setIsPressed(true);
+          playClickSound();
+        }}
         onMouseUp={() => setIsPressed(false)}
         {...safeProps}
       >
