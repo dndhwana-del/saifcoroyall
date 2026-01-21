@@ -89,13 +89,11 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <MagneticButton strength={0.3}>
-              <RoyalButton variant="secondary" size="sm">
-                Enquire
-              </RoyalButton>
-            </MagneticButton>
+            <RoyalButton variant="secondary" size="sm">
+              Enquire
+            </RoyalButton>
           </motion.div>
         </div>
       </nav>
@@ -134,24 +132,16 @@ const Index = () => {
               { value: "∞", label: "Legacy Value" },
             ].map((stat, index) => (
               <StaggerItem key={index}>
-                <motion.div 
-                  className="text-center p-5 md:p-6 border border-primary/20 bg-card/80 backdrop-blur-sm shadow-soft relative overflow-hidden group"
-                  whileHover={{ 
-                    y: -8, 
-                    boxShadow: "0 20px 40px -15px hsla(42, 55%, 50%, 0.3)" 
-                  }}
-                  transition={{ duration: 0.3 }}
+                <div 
+                  className="text-center p-5 md:p-6 border border-primary/20 bg-card/80 backdrop-blur-sm shadow-soft relative overflow-hidden group hover:shadow-[0_15px_35px_-12px_hsla(42,55%,50%,0.25)] hover:border-primary/40 transition-all duration-700"
                 >
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  
                   <div className="font-royal text-2xl md:text-3xl text-primary mb-1">
                     {stat.value}
                   </div>
                   <div className="font-body text-xs text-muted-foreground tracking-wider uppercase">
                     {stat.label}
                   </div>
-                </motion.div>
+                </div>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -190,36 +180,26 @@ const Index = () => {
                 We understand that acquiring a royal residence is not merely a transaction—
                 it is the beginning of a legacy that will endure for generations.
               </p>
-              <MagneticButton strength={0.3}>
-                <RoyalButton variant="outline" className="border-gold text-gold hover:bg-gold hover:text-espresso">
-                  Our Story
-                </RoyalButton>
-              </MagneticButton>
+              <RoyalButton variant="outline" className="border-gold text-gold hover:bg-gold/90 hover:text-espresso">
+                Our Story
+              </RoyalButton>
             </ScrollReveal>
             
             <ScrollReveal direction="right" delay={0.2}>
               <ParallaxFloat speed={0.25} direction="down" className="relative">
-                {/* Decorative element with overlapping text */}
-                <motion.div 
-                  className="aspect-square bg-gradient-to-br from-gold/20 to-bronze/10 border-2 border-gold/30 shadow-gold flex items-center justify-center backdrop-blur-sm"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
+                {/* Decorative element - Static */}
+                <div 
+                  className="aspect-square bg-gradient-to-br from-gold/20 to-bronze/10 border-2 border-gold/30 shadow-gold flex items-center justify-center backdrop-blur-sm hover:border-gold/50 transition-all duration-700"
                 >
                   <div className="text-center p-8">
-                    <motion.div 
-                      className="font-royal text-6xl md:text-7xl text-gold mb-3"
-                      animate={{ 
-                        textShadow: ["0 0 20px hsla(42,55%,58%,0.3)", "0 0 40px hsla(42,55%,58%,0.6)", "0 0 20px hsla(42,55%,58%,0.3)"]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    >
+                    <div className="font-royal text-6xl md:text-7xl text-gold mb-3 drop-shadow-[0_0_20px_hsla(42,55%,58%,0.4)]">
                       ٢٥
-                    </motion.div>
+                    </div>
                     <div className="font-body text-sm tracking-[0.3em] uppercase text-sand/60">
                       Years of Excellence
                     </div>
                   </div>
-                </motion.div>
+                </div>
                 
                 {/* Overlapping corners with parallax */}
                 <div className="absolute -top-4 -right-4 w-20 h-20 border-t-2 border-r-2 border-gold/50" />
@@ -272,11 +252,9 @@ const Index = () => {
               Allow our dedicated team to guide you toward your royal residence.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <MagneticButton strength={0.4}>
-                <RoyalButton size="lg">
-                  Schedule Consultation
-                </RoyalButton>
-              </MagneticButton>
+              <RoyalButton size="lg">
+                Schedule Consultation
+              </RoyalButton>
             </div>
             <motion.div 
               className="mt-12 pt-6 border-t border-primary/20"
