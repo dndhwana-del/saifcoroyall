@@ -105,12 +105,12 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
             <MagneticButton strength={0.4}>
-              <RoyalButton variant="crystal" size="lg">
+              <RoyalButton size="lg" className="[&>span]:drop-shadow-md">
                 View Collection
               </RoyalButton>
             </MagneticButton>
             <MagneticButton strength={0.4}>
-              <RoyalButton variant="crystal" size="lg">
+              <RoyalButton variant="outline" size="lg" className="border-sand/50 text-sand hover:bg-sand hover:text-espresso">
                 Private Consultation
               </RoyalButton>
             </MagneticButton>
