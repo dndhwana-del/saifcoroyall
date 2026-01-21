@@ -143,19 +143,72 @@ const HeroSection = () => {
             </span>
           </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          delay: 0.6
-        }} className="font-display text-xl md:text-2xl text-sand/90 mb-4 italic drop-shadow-md">
-            Where Heritage Meets Magnificence
-          </motion.p>
+          {/* Cinematic Subtitle */}
+          <motion.div 
+            className="relative mb-4 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 2.2 }}
+          >
+            {/* Subtitle container with reveal animation */}
+            <motion.p 
+              initial={{ 
+                opacity: 0, 
+                y: 30,
+                filter: 'blur(8px)'
+              }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                filter: 'blur(0px)'
+              }}
+              transition={{
+                duration: 1.4,
+                delay: 2.4,
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+              className="relative font-display text-xl md:text-2xl lg:text-3xl italic tracking-wide"
+              style={{
+                background: 'linear-gradient(90deg, hsla(42, 55%, 58%, 0.7), hsl(45, 60%, 70%), hsla(42, 55%, 58%, 0.7))',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 0 30px hsla(42, 55%, 58%, 0.4), 0 2px 8px hsla(8, 27%, 10%, 0.3)',
+              }}
+            >
+              {/* Decorative line left */}
+              <motion.span 
+                className="inline-block w-8 md:w-12 h-[1px] bg-gradient-to-r from-transparent to-[hsl(42,55%,58%)] mr-4 align-middle"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1, delay: 2.8, ease: 'easeOut' }}
+                style={{ transformOrigin: 'right' }}
+              />
+              
+              Where Heritage Meets Magnificence
+              
+              {/* Decorative line right */}
+              <motion.span 
+                className="inline-block w-8 md:w-12 h-[1px] bg-gradient-to-l from-transparent to-[hsl(42,55%,58%)] ml-4 align-middle"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1, delay: 2.8, ease: 'easeOut' }}
+                style={{ transformOrigin: 'left' }}
+              />
+            </motion.p>
+            
+            {/* Subtle shimmer sweep on subtitle */}
+            <motion.span 
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none"
+              initial={{ x: '-100%' }}
+              animate={{ x: '200%' }}
+              transition={{
+                duration: 1.5,
+                delay: 3.2,
+                ease: 'easeInOut',
+              }}
+            />
+          </motion.div>
 
           <motion.div initial={{
           opacity: 0,
