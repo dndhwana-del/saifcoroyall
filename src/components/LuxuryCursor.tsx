@@ -1,40 +1,38 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const LuxuryCursor = () => {
-  const [position, setPosition] = useState({ x: -500, y: -500 });
-  const [isVisible, setIsVisible] = useState(false);
-  const rafRef = useRef<number | null>(null);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    // Cancel any pending animation frame for performance
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-    }
-    
-    // Use requestAnimationFrame for smooth 60fps updates
-    rafRef.current = requestAnimationFrame(() => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
-    });
-  }, [isVisible]);
-
-  const handleMouseEnter = useCallback(() => setIsVisible(true), []);
-  const handleMouseLeave = useCallback(() => setIsVisible(false), []);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const innerGlowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Don't run on touch devices
+    if ('ontouchstart' in window) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      // Direct DOM manipulation for maximum performance - no React state updates
+      if (spotlightRef.current) {
+        spotlightRef.current.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+        spotlightRef.current.style.opacity = '1';
+      }
+      if (innerGlowRef.current) {
+        innerGlowRef.current.style.transform = `translate(${e.clientX - 150}px, ${e.clientY - 150}px)`;
+        innerGlowRef.current.style.opacity = '1';
+      }
+    };
+
+    const handleMouseLeave = () => {
+      if (spotlightRef.current) spotlightRef.current.style.opacity = '0';
+      if (innerGlowRef.current) innerGlowRef.current.style.opacity = '0';
+    };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
     };
-  }, [handleMouseMove, handleMouseEnter, handleMouseLeave]);
+  }, []);
 
   // Don't render on touch devices
   if (typeof window !== 'undefined' && 'ontouchstart' in window) {
@@ -43,33 +41,29 @@ const LuxuryCursor = () => {
 
   return (
     <>
-      {/* Golden Spotlight - Large ambient glow that follows cursor instantly */}
+      {/* Golden Spotlight - Large ambient glow, instant tracking via transform */}
       <div
-        className="fixed pointer-events-none z-[9998] mix-blend-soft-light"
+        ref={spotlightRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-soft-light"
         style={{
-          left: position.x,
-          top: position.y,
           width: 500,
           height: 500,
-          transform: 'translate(-50%, -50%)',
           background: `radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0.08) 30%, rgba(212, 175, 55, 0.02) 50%, transparent 70%)`,
-          opacity: isVisible ? 1 : 0,
-          willChange: 'left, top',
+          opacity: 0,
+          willChange: 'transform',
         }}
       />
       
-      {/* Secondary warm ambient layer */}
+      {/* Secondary warm inner glow */}
       <div
-        className="fixed pointer-events-none z-[9997]"
+        ref={innerGlowRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9997]"
         style={{
-          left: position.x,
-          top: position.y,
           width: 300,
           height: 300,
-          transform: 'translate(-50%, -50%)',
-          background: `radial-gradient(circle, rgba(245, 230, 163, 0.1) 0%, transparent 60%)`,
-          opacity: isVisible ? 1 : 0,
-          willChange: 'left, top',
+          background: `radial-gradient(circle, rgba(245, 230, 163, 0.12) 0%, transparent 60%)`,
+          opacity: 0,
+          willChange: 'transform',
         }}
       />
 
@@ -98,7 +92,7 @@ const LuxuryCursor = () => {
           );
           pointer-events: none;
           border-radius: inherit;
-          animation: reflectionPulse 1.5s ease-out;
+          animation: reflectionPulse 1.5s ease-out forwards;
         }
         
         /* Interactive reflection on property cards */
@@ -116,7 +110,7 @@ const LuxuryCursor = () => {
             opacity: 1;
           }
           100% {
-            opacity: 0.6;
+            opacity: 0.7;
             transform: translateY(0);
           }
         }
