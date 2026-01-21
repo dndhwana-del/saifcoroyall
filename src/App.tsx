@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LuxuryCursor from "./components/LuxuryCursor";
 import Preloader from "./components/Preloader";
+import { SmoothScrollProvider } from "./components/SmoothScrollProvider";
 
 const queryClient = new QueryClient();
 
@@ -27,15 +28,18 @@ const App = () => {
         {/* Custom Luxury Cursor */}
         <LuxuryCursor />
         
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        {/* Smooth Scroll Provider - buttery scroll physics */}
+        <SmoothScrollProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </SmoothScrollProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

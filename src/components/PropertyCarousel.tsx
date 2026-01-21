@@ -1,8 +1,37 @@
-import { motion, useAnimationControls } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
 import { Bed, Bath, Maximize2 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import CalligraphyAccent from "./CalligraphyAccent";
+
+// Stagger reveal animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 50,
+    scale: 0.95,
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut" as const,
+    },
+  },
+};
 
 interface Property {
   image: string;
@@ -301,30 +330,42 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   
   // Duplicate properties for infinite scroll effect
   const duplicatedProperties = [...properties, ...properties, ...properties];
 
   return (
-    <section id="collection" className="relative py-10 -mt-24 z-20">
+    <motion.section 
+      ref={sectionRef}
+      id="collection" 
+      className="relative py-10 -mt-24 z-20"
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
       {/* Section overlaps the hero */}
       <div className="relative">
         {/* Glass header floating above */}
         <div className="container mx-auto px-6 mb-6">
-          <ScrollReveal className="text-center max-w-3xl mx-auto">
-            <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
-            <h2 className="text-3xl md:text-5xl font-royal mb-4 text-shimmer">
-              The Royal Vault
-            </h2>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed">
-              An exclusive gallery of the Gulf's most prestigious estates
-            </p>
-          </ScrollReveal>
+          <motion.div variants={cardVariants}>
+            <ScrollReveal className="text-center max-w-3xl mx-auto">
+              <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
+              <h2 className="text-3xl md:text-5xl font-royal mb-4 text-shimmer">
+                The Royal Vault
+              </h2>
+              <p className="font-body text-lg text-muted-foreground leading-relaxed">
+                An exclusive gallery of the Gulf's most prestigious estates
+              </p>
+            </ScrollReveal>
+          </motion.div>
         </div>
 
-        {/* Infinite Carousel */}
-        <div 
+        {/* Infinite Carousel with staggered reveal */}
+        <motion.div 
           className="relative overflow-hidden"
+          variants={cardVariants}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -363,10 +404,13 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
               />
             ))}
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Navigation Hint */}
-        <div className="container mx-auto px-6 mt-8">
+        <motion.div 
+          className="container mx-auto px-6 mt-8"
+          variants={cardVariants}
+        >
           <div className="flex items-center justify-center gap-2 text-muted-foreground/60">
             <motion.div
               className="w-8 h-px bg-primary/40"
@@ -382,9 +426,9 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
               transition={{ duration: 2, repeat: Infinity }}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
