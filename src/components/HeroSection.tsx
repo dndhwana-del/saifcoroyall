@@ -38,9 +38,9 @@ const HeroSection = () => {
               }}
             />
             {/* Warm overlay on image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/40 to-transparent" />
             {/* Text readability gradient overlay - stronger at bottom */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           </div>
         </GoldenArchway>
       </div>
@@ -105,7 +105,7 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
             <MagneticButton strength={0.4}>
-              <RoyalButton size="lg">
+              <RoyalButton size="lg" className="[&>span]:drop-shadow-md">
                 View Collection
               </RoyalButton>
             </MagneticButton>
