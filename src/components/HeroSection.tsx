@@ -105,12 +105,12 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
             <MagneticButton strength={0.4}>
-              <RoyalButton size="lg" className="[&>span]:drop-shadow-md">
+              <RoyalButton size="md" className="[&>span]:drop-shadow-md">
                 View Collection
               </RoyalButton>
             </MagneticButton>
             <MagneticButton strength={0.4}>
-              <RoyalButton variant="secondary" size="lg">
+              <RoyalButton variant="secondary" size="md">
                 Private Consultation
               </RoyalButton>
             </MagneticButton>
