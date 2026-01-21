@@ -58,15 +58,39 @@ const HeroSection = () => {
             <CalligraphyAccent className="mx-auto w-48 h-12" />
           </motion.div>
           
-          {/* Main Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-royal leading-tight mb-6 text-shimmer drop-shadow-lg"
-          >
-            Royal Gulf Estates
-          </motion.h1>
+          {/* Main Title - Cinematic Brand Reveal */}
+          <div className="relative mb-6">
+            {/* Golden Glow Blob Behind Title */}
+            <motion.div
+              className="absolute inset-0 -inset-x-20 -inset-y-10 bg-gradient-radial from-gold/20 via-gold/5 to-transparent blur-[100px] pointer-events-none"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 2, delay: 0.3, ease: "easeOut" }}
+            />
+            
+            <motion.h1
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                duration: 1.5, 
+                delay: 0.4,
+                ease: [0.25, 0.46, 0.45, 0.94] // easeOutQuart
+              }}
+              className="relative text-5xl md:text-7xl lg:text-8xl font-royal leading-tight uppercase tracking-[0.15em]"
+            >
+              <span className="royal-title-embossed">Royal Gulf</span>
+            </motion.h1>
+            
+            {/* Light Sweep Overlay - Triggers after entrance */}
+            <motion.div
+              className="absolute inset-0 pointer-events-none overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2, duration: 0.3 }}
+            >
+              <div className="royal-light-sweep absolute inset-0" />
+            </motion.div>
+          </div>
 
           {/* Subtitle */}
           <motion.p
