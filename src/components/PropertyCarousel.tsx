@@ -306,11 +306,11 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
   const duplicatedProperties = [...properties, ...properties, ...properties];
 
   return (
-    <section id="collection" className="relative py-20 -mt-24 z-20">
+    <section id="collection" className="relative py-10 -mt-24 z-20">
       {/* Section overlaps the hero */}
       <div className="relative">
         {/* Glass header floating above */}
-        <div className="container mx-auto px-6 mb-12">
+        <div className="container mx-auto px-6 mb-6">
           <ScrollReveal className="text-center max-w-3xl mx-auto">
             <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
             <h2 className="text-3xl md:text-5xl font-royal mb-4 text-shimmer">

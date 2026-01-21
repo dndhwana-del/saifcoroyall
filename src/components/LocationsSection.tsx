@@ -118,12 +118,13 @@ const LocationsSection = () => {
                           className="absolute inset-0 -m-4 rounded-full border border-gold/40"
                           animate={{
                             scale: [1, 2 + ring * 0.5, 1],
-                            opacity: [0.5, 0, 0.5],
+                            opacity: [0.6, 0, 0.6],
                           }}
                           transition={{
-                            duration: 2.5 + ring * 0.3,
+                            duration: 2 + ring * 0.2,
                             repeat: Infinity,
-                            delay: index * 0.3 + ring * 0.2,
+                            ease: "easeInOut",
+                            delay: index * 0.2 + ring * 0.15,
                           }}
                         />
                       ))}
