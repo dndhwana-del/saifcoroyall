@@ -7,6 +7,8 @@ import RoyalButton from "@/components/RoyalButton";
 import GoldenArchway from "@/components/GoldenArchway";
 import RoyalDivider from "@/components/RoyalDivider";
 import PropertyCard from "@/components/PropertyCard";
+import ScrollReveal from "@/components/ScrollReveal";
+import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 const Index = () => {
   return <div className="min-h-screen bg-background mashrabiya-pattern">
       {/* Navigation */}
@@ -108,7 +110,7 @@ const Index = () => {
       {/* Featured Section - Stats */}
       <section className="relative py-24 bg-card mashrabiya-pattern">
         <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-16">
             <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
             <h2 className="text-3xl md:text-5xl font-royal mb-6 text-shimmer">
               Exceptional Estates
@@ -117,38 +119,42 @@ const Index = () => {
               Each residence in our portfolio represents the zenith of architectural mastery, 
               blending traditional Arabian artistry with contemporary sophistication.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {[{
-            value: "50+",
-            label: "Royal Estates"
-          }, {
-            value: "25",
-            label: "Years of Excellence"
-          }, {
-            value: "100%",
-            label: "Private & Exclusive"
-          }, {
-            value: "∞",
-            label: "Legacy Value"
-          }].map((stat, index) => <div key={index} className="text-center p-6 border border-primary/20 bg-background/50 shadow-soft">
-                <div className="font-royal text-3xl md:text-4xl text-primary mb-2">
-                  {stat.value}
+              value: "50+",
+              label: "Royal Estates"
+            }, {
+              value: "25",
+              label: "Years of Excellence"
+            }, {
+              value: "100%",
+              label: "Private & Exclusive"
+            }, {
+              value: "∞",
+              label: "Legacy Value"
+            }].map((stat, index) => (
+              <StaggerItem key={index}>
+                <div className="text-center p-6 border border-primary/20 bg-background/50 shadow-soft">
+                  <div className="font-royal text-3xl md:text-4xl text-primary mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="font-body text-sm text-muted-foreground tracking-wider uppercase">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="font-body text-sm text-muted-foreground tracking-wider uppercase">
-                  {stat.label}
-                </div>
-              </div>)}
-          </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Royal Collection - Property Cards */}
       <section id="collection" className="relative py-24 bg-background mashrabiya-pattern">
         <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-16">
             <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
             <h2 className="text-3xl md:text-5xl font-royal mb-6 text-shimmer">
               The Royal Collection
@@ -157,21 +163,27 @@ const Index = () => {
               A curated gallery of the Gulf's most distinguished residences, 
               each a masterpiece of heritage and opulence.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Property Cards Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <PropertyCard image={property1} title="Al Qasr Palace" location="Emirates Hills, Dubai" price="AED 185M" bedrooms={12} bathrooms={15} area="45,000 sqft" />
-            <PropertyCard image={property2} title="Pearl Bay Estate" location="The Pearl, Doha" price="AED 142M" bedrooms={9} bathrooms={12} area="38,000 sqft" />
-            <PropertyCard image={property3} title="Skyline Majlis" location="Downtown, Dubai" price="AED 98M" bedrooms={6} bathrooms={8} area="22,000 sqft" />
-          </div>
+          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto" staggerDelay={0.2}>
+            <StaggerItem>
+              <PropertyCard image={property1} title="Al Qasr Palace" location="Emirates Hills, Dubai" price="AED 185M" bedrooms={12} bathrooms={15} area="45,000 sqft" />
+            </StaggerItem>
+            <StaggerItem>
+              <PropertyCard image={property2} title="Pearl Bay Estate" location="The Pearl, Doha" price="AED 142M" bedrooms={9} bathrooms={12} area="38,000 sqft" />
+            </StaggerItem>
+            <StaggerItem>
+              <PropertyCard image={property3} title="Skyline Majlis" location="Downtown, Dubai" price="AED 98M" bedrooms={6} bathrooms={8} area="22,000 sqft" />
+            </StaggerItem>
+          </StaggerContainer>
 
           {/* View All Button */}
-          <div className="text-center mt-16">
+          <ScrollReveal className="text-center mt-16" delay={0.4}>
             <RoyalButton variant="secondary" size="lg">
               Explore Full Collection
             </RoyalButton>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -179,7 +191,7 @@ const Index = () => {
       <section id="heritage" className="relative py-24 bg-espresso text-sand mashrabiya-pattern">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
+            <ScrollReveal direction="left">
               <CalligraphyAccent className="mb-6 w-32 h-8" />
               <h2 className="text-3xl md:text-5xl font-royal mb-6 text-gold">
                 A Legacy of Distinction
@@ -196,20 +208,22 @@ const Index = () => {
               <RoyalButton variant="outline" className="border-gold text-gold hover:bg-gold hover:text-espresso">
                 Our Story
               </RoyalButton>
-            </div>
-            <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-gold/20 to-bronze/10 border-2 border-gold/30 shadow-gold flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="font-royal text-6xl text-gold mb-4">٢٥</div>
-                  <div className="font-body text-sm tracking-[0.3em] uppercase text-sand/60">
-                    Years of Excellence
+            </ScrollReveal>
+            <ScrollReveal direction="right" delay={0.2}>
+              <div className="relative">
+                <div className="aspect-square bg-gradient-to-br from-gold/20 to-bronze/10 border-2 border-gold/30 shadow-gold flex items-center justify-center">
+                  <div className="text-center p-8">
+                    <div className="font-royal text-6xl text-gold mb-4">٢٥</div>
+                    <div className="font-body text-sm tracking-[0.3em] uppercase text-sand/60">
+                      Years of Excellence
+                    </div>
                   </div>
                 </div>
+                {/* Decorative corner */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-gold/40" />
+                <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-gold/40" />
               </div>
-              {/* Decorative corner */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-gold/40" />
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-gold/40" />
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -217,24 +231,26 @@ const Index = () => {
       {/* Contact Section */}
       <section id="contact" className="relative py-24 bg-background mashrabiya-pattern">
         <div className="container mx-auto px-6 text-center max-w-3xl">
-          <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
-          <h2 className="text-3xl md:text-5xl font-royal mb-6 text-shimmer">
-            Begin Your Journey
-          </h2>
-          <p className="font-body text-lg text-muted-foreground leading-relaxed mb-10">
-            Every exceptional estate begins with a conversation. 
-            Allow our dedicated team to guide you toward your royal residence.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <RoyalButton size="lg">
-              Schedule Consultation
-            </RoyalButton>
-          </div>
-          <div className="mt-16 pt-8 border-t border-primary/20">
-            <p className="font-body text-sm text-muted-foreground tracking-wider">
-              Discretion Assured · By Appointment Only · Dubai · Abu Dhabi · Doha
+          <ScrollReveal>
+            <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
+            <h2 className="text-3xl md:text-5xl font-royal mb-6 text-shimmer">
+              Begin Your Journey
+            </h2>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-10">
+              Every exceptional estate begins with a conversation. 
+              Allow our dedicated team to guide you toward your royal residence.
             </p>
-          </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <RoyalButton size="lg">
+                Schedule Consultation
+              </RoyalButton>
+            </div>
+            <div className="mt-16 pt-8 border-t border-primary/20">
+              <p className="font-body text-sm text-muted-foreground tracking-wider">
+                Discretion Assured · By Appointment Only · Dubai · Abu Dhabi · Doha
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
