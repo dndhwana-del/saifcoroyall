@@ -83,18 +83,64 @@ const HeroSection = () => {
             <CalligraphyAccent className="mx-auto w-48 h-12" />
           </motion.div>
           
-          {/* Main Title */}
-          <motion.h1 initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          delay: 0.4
-        }} className="text-4xl md:text-6xl lg:text-7xl font-royal leading-tight mb-6 text-shimmer drop-shadow-lg">
-            Royal Gulf Estates
+          {/* Main Title - Cinematic Hero Reveal */}
+          <motion.h1 
+            initial={{
+              opacity: 0,
+              y: 50,
+              scale: 0.9,
+            }} 
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }} 
+            transition={{
+              duration: 1.8,
+              delay: 0.4,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }} 
+            className="relative text-5xl md:text-7xl lg:text-8xl font-royal leading-tight mb-6 tracking-[0.15em]"
+          >
+            {/* Soft glow backdrop */}
+            <span className="absolute inset-0 blur-3xl bg-gradient-to-r from-transparent via-[hsl(42,55%,58%)]/30 to-transparent scale-150 animate-pulse" />
+            
+            {/* Main title with gold luminous effect */}
+            <span className="relative inline-block">
+              {/* Multi-tone gold gradient text */}
+              <span 
+                className="relative bg-gradient-to-b from-[hsl(45,70%,75%)] via-[hsl(42,55%,58%)] to-[hsl(38,50%,45%)] bg-clip-text text-transparent"
+                style={{
+                  textShadow: '0 0 40px hsla(42, 55%, 58%, 0.5), 0 0 80px hsla(42, 55%, 58%, 0.3), 0 4px 12px hsla(8, 27%, 10%, 0.5)',
+                  WebkitTextStroke: '0.5px hsla(42, 55%, 58%, 0.3)',
+                }}
+              >
+                ROYAL GULF
+              </span>
+              
+              {/* Light sweep overlay */}
+              <motion.span 
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none"
+                initial={{ x: '-200%' }}
+                animate={{ x: '200%' }}
+                transition={{
+                  duration: 2.5,
+                  delay: 1.5,
+                  ease: 'easeInOut',
+                  repeat: Infinity,
+                  repeatDelay: 6
+                }}
+              />
+              
+              {/* Metallic reflection highlight */}
+              <span 
+                className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent bg-clip-text pointer-events-none"
+                style={{ 
+                  mixBlendMode: 'overlay',
+                  maskImage: 'linear-gradient(to bottom, black 30%, transparent 70%)'
+                }}
+              />
+            </span>
           </motion.h1>
 
           {/* Subtitle */}
