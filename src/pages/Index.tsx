@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import heroPalace from "@/assets/hero-palace.jpg";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
@@ -9,8 +10,12 @@ import RoyalDivider from "@/components/RoyalDivider";
 import PropertyCard from "@/components/PropertyCard";
 import ScrollReveal from "@/components/ScrollReveal";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
+import LocationsSection from "@/components/LocationsSection";
+import MegaFooter from "@/components/MegaFooter";
+
 const Index = () => {
-  return <div className="min-h-screen bg-background mashrabiya-pattern">
+  return (
+    <div className="min-h-screen bg-background mashrabiya-pattern">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-primary/10">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
@@ -46,16 +51,31 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/90 z-10" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 z-10" />
         
+        {/* Text readability gradient overlay at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-10 pointer-events-none" />
+        
         {/* Golden hour vignette */}
         <div className="absolute inset-0 shadow-[inset_0_0_200px_60px_hsla(42,55%,58%,0.08)] z-10 pointer-events-none" />
 
-        {/* Hero Image with Archway Frame */}
+        {/* Hero Image with Archway Frame - Ken Burns Effect */}
         <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16">
           <GoldenArchway className="w-full max-w-6xl h-[70vh] md:h-[80vh]">
             <div className="relative w-full h-full overflow-hidden rounded-t-archway">
-              <img src={heroPalace} alt="Luxurious Arabian Gulf Palace Interior" className="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-[2s]" />
+              <motion.img 
+                src={heroPalace} 
+                alt="Luxurious Arabian Gulf Palace Interior" 
+                className="w-full h-full object-cover object-center"
+                initial={{ scale: 1 }}
+                animate={{ scale: 1.1 }}
+                transition={{ 
+                  duration: 20, 
+                  ease: "linear",
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+              />
               {/* Warm overlay on image */}
-              <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 via-espresso/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/30 to-transparent" />
             </div>
           </GoldenArchway>
         </div>
@@ -254,22 +274,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-espresso text-sand py-12 border-t border-gold/20">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <CalligraphyAccent className="w-16 h-5" />
-              <span className="font-royal text-lg tracking-[0.2em] text-gold">
-                ROYAL GULF
-              </span>
-            </div>
-            <p className="font-body text-sm text-sand/60">
-              © 2024 Royal Gulf Estates. All Rights Reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>;
+      {/* Prime Coordinates - Locations Section */}
+      <LocationsSection />
+
+      {/* Mega Footer */}
+      <MegaFooter />
+    </div>
+  );
 };
+
 export default Index;

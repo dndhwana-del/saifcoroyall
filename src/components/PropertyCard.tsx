@@ -1,4 +1,6 @@
 import { Bed, Bath, Key } from "lucide-react";
+import { motion } from "framer-motion";
+
 interface PropertyCardProps {
   image: string;
   title: string;
@@ -8,6 +10,7 @@ interface PropertyCardProps {
   bathrooms: number;
   area: string;
 }
+
 const PropertyCard = ({
   image,
   title,
@@ -17,19 +20,41 @@ const PropertyCard = ({
   bathrooms,
   area
 }: PropertyCardProps) => {
-  return <article className="group relative bg-cardstock transition-all duration-500 ease-out hover:-translate-y-3 hover:shadow-[0_20px_60px_-10px_hsla(42,55%,50%,0.35)]">
+  return (
+    <motion.article 
+      className="group relative bg-cardstock cursor-pointer"
+      whileHover={{ 
+        y: -12,
+        transition: { duration: 0.4, ease: "easeOut" }
+      }}
+      style={{
+        boxShadow: "0 4px 20px -2px hsla(42, 55%, 40%, 0.1)"
+      }}
+      whileTap={{ scale: 0.98 }}
+    >
+      {/* Animated Golden Glow on Hover */}
+      <motion.div 
+        className="absolute -inset-2 rounded-lg bg-gradient-to-b from-gold/20 via-gold/10 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
+      />
+      
       {/* Double Border - Outer */}
-      <div className="absolute inset-0 border border-bronze/30" />
+      <div className="absolute inset-0 border border-bronze/30 group-hover:border-bronze/50 transition-colors duration-300" />
       
       {/* Double Border - Inner (4px offset) */}
-      <div className="absolute inset-[4px] border border-bronze/50" />
+      <div className="absolute inset-[4px] border border-bronze/50 group-hover:border-bronze/70 transition-colors duration-300" />
 
       {/* Content Container */}
       <div className="relative p-[4px] border-primary-foreground border shadow-royal">
         {/* Image with Arch Shape */}
         <div className="relative overflow-hidden rounded-t-[50%_20%] mx-[4px] mt-[4px]">
           <div className="aspect-[4/3] overflow-hidden">
-            <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <motion.img 
+              src={image} 
+              alt={title} 
+              className="w-full h-full object-cover"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            />
             {/* Vignette Shadow */}
             <div className="absolute inset-0 shadow-[inset_0_0_40px_10px_rgba(62,39,35,0.3)]" />
             {/* Bottom gradient for blend */}
@@ -92,13 +117,17 @@ const PropertyCard = ({
           </div>
         </div>
 
-        {/* View Details Link */}
-        <div className="absolute bottom-0 left-0 right-0 h-0 bg-bronze/10 group-hover:h-12 transition-all duration-300 overflow-hidden flex items-center justify-center">
-          <span className="font-royal text-xs tracking-[0.2em] text-bronze uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-            View Estate →
+        {/* View Details Link - Enhanced */}
+        <div className="absolute bottom-0 left-0 right-0 h-0 bg-gradient-to-r from-bronze/20 via-bronze/30 to-bronze/20 group-hover:h-12 transition-all duration-300 overflow-hidden flex items-center justify-center">
+          <span className="font-royal text-xs tracking-[0.2em] text-bronze uppercase flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+            <span className="w-8 h-px bg-bronze/50" />
+            View Estate
+            <span className="w-8 h-px bg-bronze/50" />
           </span>
         </div>
       </div>
-    </article>;
+    </motion.article>
+  );
 };
+
 export default PropertyCard;
