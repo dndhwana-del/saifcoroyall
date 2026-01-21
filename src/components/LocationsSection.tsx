@@ -1,7 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
+import { Maximize2 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import CalligraphyAccent from "./CalligraphyAccent";
+import FullscreenMapExplorer from "./FullscreenMapExplorer";
 
 interface LocationMarker {
   name: string;
@@ -15,6 +17,7 @@ interface LocationMarker {
 
 const LocationsSection = () => {
   const [activeLocation, setActiveLocation] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   
   const locations: LocationMarker[] = [
     {
@@ -294,6 +297,17 @@ const LocationsSection = () => {
                     </motion.div>
                   </div>
 
+                  {/* Fullscreen Button */}
+                  <motion.button
+                    className="absolute top-6 right-6 w-10 h-10 border border-primary/40 bg-foreground/60 backdrop-blur-md flex items-center justify-center text-primary hover:bg-primary/20 hover:border-primary/60 transition-colors z-30"
+                    onClick={() => setIsFullscreen(true)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    title="Open Fullscreen Map Explorer"
+                  >
+                    <Maximize2 size={16} />
+                  </motion.button>
+
                   {/* Active Location Indicator */}
                   <AnimatePresence>
                     {activeLocation && (
@@ -356,6 +370,14 @@ const LocationsSection = () => {
           </div>
         </ScrollReveal>
       </div>
+
+      {/* Fullscreen Map Explorer Modal */}
+      <FullscreenMapExplorer
+        isOpen={isFullscreen}
+        onClose={() => setIsFullscreen(false)}
+        locations={locations}
+        initialLocation={activeLocation}
+      />
     </section>
   );
 };
