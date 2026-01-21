@@ -34,9 +34,6 @@ const Index = () => {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const decorY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
-  // Navbar background transition: transparent -> glassy blur
-  const navBgOpacity = useTransform(scrollYProgress, [0, 0.08], [0, 1]);
-
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
       {/* Continuous Mashrabiya Pattern with Parallax */}
@@ -55,20 +52,9 @@ const Index = () => {
         style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]) }}
       />
       
-      {/* Navigation with Dynamic Background */}
-      <motion.nav 
-        className="fixed top-0 left-0 right-0 z-50 border-b border-primary/10"
-        style={{
-          backgroundColor: `hsla(8, 27%, 12%, ${navBgOpacity.get()})`,
-        }}
-      >
-        {/* Glassy blur background layer - fades in on scroll */}
-        <motion.div 
-          className="absolute inset-0 bg-espresso/90 backdrop-blur-lg"
-          style={{ opacity: navBgOpacity }}
-        />
-        
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between relative z-10">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-lg border-b border-primary/10">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div 
             className="flex items-center gap-3"
             initial={{ opacity: 0, x: -20 }}
@@ -112,7 +98,7 @@ const Index = () => {
             </MagneticButton>
           </motion.div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Hero Section */}
       <HeroSection />
@@ -205,7 +191,7 @@ const Index = () => {
                 it is the beginning of a legacy that will endure for generations.
               </p>
               <MagneticButton strength={0.3}>
-                <RoyalButton variant="secondary">
+                <RoyalButton variant="outline" className="border-gold text-gold hover:bg-gold hover:text-espresso">
                   Our Story
                 </RoyalButton>
               </MagneticButton>
