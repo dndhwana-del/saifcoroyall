@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import { Bed, Bath, Key } from "lucide-react";
+
 interface PropertyCardProps {
   image: string;
   title: string;
@@ -8,6 +10,7 @@ interface PropertyCardProps {
   bathrooms: number;
   area: string;
 }
+
 const PropertyCard = ({
   image,
   title,
@@ -17,19 +20,44 @@ const PropertyCard = ({
   bathrooms,
   area
 }: PropertyCardProps) => {
-  return <article className="group relative bg-cardstock transition-all duration-500 ease-out hover:-translate-y-3 hover:shadow-[0_20px_60px_-10px_hsla(42,55%,50%,0.35)]">
+  return (
+    <motion.article 
+      className="group relative bg-cardstock cursor-pointer"
+      whileHover={{ 
+        y: -12,
+        transition: { duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }
+      }}
+      initial={{ boxShadow: "0 4px 20px -4px hsla(42, 55%, 50%, 0.15)" }}
+      whileTap={{ scale: 0.98 }}
+      style={{
+        boxShadow: "0 4px 20px -4px hsla(42, 55%, 50%, 0.15)",
+      }}
+      onHoverStart={(e) => {
+        (e.target as HTMLElement).style.boxShadow = "0 25px 60px -10px hsla(42, 55%, 50%, 0.4)";
+      }}
+      onHoverEnd={(e) => {
+        (e.target as HTMLElement).style.boxShadow = "0 4px 20px -4px hsla(42, 55%, 50%, 0.15)";
+      }}
+    >
       {/* Double Border - Outer */}
-      <div className="absolute inset-0 border border-bronze/30" />
+      <div className="absolute inset-0 border border-bronze/30 group-hover:border-bronze/60 transition-colors duration-500" />
       
       {/* Double Border - Inner (4px offset) */}
-      <div className="absolute inset-[4px] border border-bronze/50" />
+      <div className="absolute inset-[4px] border border-bronze/50 group-hover:border-bronze/80 transition-colors duration-500" />
 
       {/* Content Container */}
       <div className="relative p-[4px] border-primary-foreground border shadow-royal">
         {/* Image with Arch Shape */}
         <div className="relative overflow-hidden rounded-t-[50%_20%] mx-[4px] mt-[4px]">
           <div className="aspect-[4/3] overflow-hidden">
-            <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <motion.img 
+              src={image} 
+              alt={title} 
+              className="w-full h-full object-cover"
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
+            />
             {/* Vignette Shadow */}
             <div className="absolute inset-0 shadow-[inset_0_0_40px_10px_rgba(62,39,35,0.3)]" />
             {/* Bottom gradient for blend */}
@@ -93,12 +121,37 @@ const PropertyCard = ({
         </div>
 
         {/* View Details Link */}
-        <div className="absolute bottom-0 left-0 right-0 h-0 bg-bronze/10 group-hover:h-12 transition-all duration-300 overflow-hidden flex items-center justify-center">
-          <span className="font-royal text-xs tracking-[0.2em] text-bronze uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-            View Estate →
-          </span>
-        </div>
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-bronze/20 via-gold/30 to-bronze/20 flex items-center justify-center overflow-hidden"
+          initial={{ height: 0, opacity: 0 }}
+          whileHover={{ height: 48, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.span 
+            className="font-royal text-xs tracking-[0.2em] text-espresso uppercase flex items-center gap-2"
+            initial={{ opacity: 0, y: 10 }}
+            whileHover={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <motion.span
+              animate={{ 
+                textShadow: ["0 0 0px hsla(42, 55%, 58%, 0)", "0 0 12px hsla(42, 55%, 58%, 0.8)", "0 0 0px hsla(42, 55%, 58%, 0)"]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              View Estate
+            </motion.span>
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.span>
+        </motion.div>
       </div>
-    </article>;
+    </motion.article>
+  );
 };
+
 export default PropertyCard;
