@@ -1,43 +1,46 @@
 import { forwardRef } from "react";
+import { ArrowRight } from "lucide-react";
 
 interface RoyalButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
+  showArrow?: boolean;
 }
 
 const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
-  ({ variant = "primary", size = "md", children, className = "", ...props }, ref) => {
+  ({ variant = "primary", size = "md", children, className = "", showArrow = false, ...props }, ref) => {
     
     const sizes = {
       sm: "px-6 py-2.5 text-xs",
-      md: "px-12 py-4 text-base",
-      lg: "px-16 py-5 text-lg",
+      md: "px-8 py-3 text-sm",
+      lg: "px-10 py-4 text-base",
     };
 
+    // Ghost Capsule style - transparent with gold border, fills on hover
+    const baseStyles = `
+      bg-transparent border border-[#D4AF37] text-[#D4AF37]
+      hover:bg-[#D4AF37] hover:text-[#1A0F0A]
+    `;
+
     const variantStyles = {
-      // Solid gold ingot
-      primary: `bg-gradient-to-br from-[#D4AF37] via-[#C9A227] to-[#AA8A2D] text-[#F8F5E4]
-        shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_0_rgba(0,0,0,0.15),0_4px_16px_rgba(170,138,45,0.35)]
-        hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_0_rgba(0,0,0,0.1),0_6px_24px_rgba(170,138,45,0.45)]`,
-      // Dark espresso with gold accents
-      secondary: `bg-gradient-to-br from-[#3E2723] via-[#2C1A12] to-[#1A0F0A] text-[#D4AF37] border border-[#D4AF37]/40
-        shadow-[inset_0_1px_0_rgba(212,175,55,0.1),inset_0_-2px_0_rgba(0,0,0,0.3),0_4px_16px_rgba(0,0,0,0.4)]
-        hover:border-[#D4AF37]/70 hover:shadow-[inset_0_1px_0_rgba(212,175,55,0.15),0_6px_24px_rgba(0,0,0,0.5)]`,
-      // Ghost: transparent with gold outline only
-      ghost: `bg-transparent text-[#D4AF37] border border-[#D4AF37]/50
-        hover:border-[#D4AF37] hover:bg-[#D4AF37]/10`,
+      primary: baseStyles,
+      secondary: `bg-transparent border border-[#D4AF37]/70 text-[#D4AF37]
+        hover:bg-[#D4AF37] hover:text-[#1A0F0A] hover:border-[#D4AF37]`,
+      ghost: `bg-transparent border border-[#D4AF37]/50 text-[#D4AF37]
+        hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]`,
     };
+
+    const showArrowIcon = showArrow || variant === "primary";
 
     return (
       <button
         ref={ref}
         className={`
-          relative inline-flex items-center justify-center 
+          relative inline-flex items-center justify-center gap-2
           font-royal tracking-[0.2em] uppercase
-          rounded-sm
-          overflow-hidden
-          transition-all duration-300 ease-out
+          rounded-full
+          transition-all duration-300 ease-in-out
           group
           active:scale-[0.98]
           ${variantStyles[variant]}
@@ -46,32 +49,18 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
         `}
         {...props}
       >
-        {/* Brushed metal texture overlay */}
-        <span 
-          className="absolute inset-0 opacity-[0.06] pointer-events-none"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              105deg,
-              transparent,
-              transparent 1px,
-              rgba(255,255,255,0.15) 1px,
-              rgba(255,255,255,0.15) 2px
-            )`
-          }}
-          aria-hidden="true"
-        />
-        
-        {/* Metallic sheen sweep on hover */}
-        <span 
-          className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out
-            bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none"
-          aria-hidden="true"
-        />
-        
         {/* Button text */}
         <span className="relative z-10 font-medium">
           {children}
         </span>
+        
+        {/* Arrow icon - slides right on hover */}
+        {showArrowIcon && (
+          <ArrowRight 
+            className="w-4 h-4 transition-transform duration-300 ease-out group-hover:translate-x-1" 
+            strokeWidth={2}
+          />
+        )}
       </button>
     );
   }
