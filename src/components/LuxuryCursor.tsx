@@ -1,58 +1,38 @@
-import { useEffect, useState, useCallback } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 const LuxuryCursor = () => {
-  const [isHoveringInteractive, setIsHoveringInteractive] = useState(false);
+  const [position, setPosition] = useState({ x: -500, y: -500 });
   const [isVisible, setIsVisible] = useState(false);
-
-  // Use motion values for smooth physics-based following
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-
-  // Spring physics for smooth cursor delay
-  const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    cursorX.set(e.clientX);
-    cursorY.set(e.clientY);
-    if (!isVisible) setIsVisible(true);
-  }, [cursorX, cursorY, isVisible]);
+    // Cancel any pending animation frame for performance
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    
+    // Use requestAnimationFrame for smooth 60fps updates
+    rafRef.current = requestAnimationFrame(() => {
+      setPosition({ x: e.clientX, y: e.clientY });
+      if (!isVisible) setIsVisible(true);
+    });
+  }, [isVisible]);
 
   const handleMouseEnter = useCallback(() => setIsVisible(true), []);
   const handleMouseLeave = useCallback(() => setIsVisible(false), []);
 
   useEffect(() => {
-    // Check for interactive elements
-    const handleElementHover = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const isInteractive = 
-        target.tagName === 'BUTTON' ||
-        target.tagName === 'A' ||
-        target.closest('button') ||
-        target.closest('a') ||
-        target.closest('[role="button"]') ||
-        target.classList.contains('cursor-pointer') ||
-        target.closest('.cursor-pointer');
-      
-      setIsHoveringInteractive(!!isInteractive);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mousemove', handleElementHover);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Hide default cursor
-    document.body.style.cursor = 'none';
-
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousemove', handleElementHover);
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      document.body.style.cursor = 'auto';
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, [handleMouseMove, handleMouseEnter, handleMouseLeave]);
 
@@ -63,59 +43,82 @@ const LuxuryCursor = () => {
 
   return (
     <>
-      {/* Main cursor ring */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+      {/* Golden Spotlight - Large ambient glow that follows cursor instantly */}
+      <div
+        className="fixed pointer-events-none z-[9998] mix-blend-soft-light"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          left: position.x,
+          top: position.y,
+          width: 500,
+          height: 500,
+          transform: 'translate(-50%, -50%)',
+          background: `radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0.08) 30%, rgba(212, 175, 55, 0.02) 50%, transparent 70%)`,
+          opacity: isVisible ? 1 : 0,
+          willChange: 'left, top',
         }}
-      >
-        <motion.div
-          className="relative -translate-x-1/2 -translate-y-1/2"
-          animate={{
-            width: isHoveringInteractive ? 48 : 24,
-            height: isHoveringInteractive ? 48 : 24,
-            opacity: isVisible ? 1 : 0,
-          }}
-          transition={{
-            duration: 0.4,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }}
-        >
-          {/* Outer ring */}
-          <motion.div
-            className="absolute inset-0 rounded-full"
-            style={{
-              border: "1px solid #D4AF37",
-              boxShadow: isHoveringInteractive 
-                ? "0 0 20px 2px rgba(212, 175, 55, 0.4), inset 0 0 15px rgba(212, 175, 55, 0.2)"
-                : "0 0 10px 1px rgba(212, 175, 55, 0.2)",
-            }}
-            animate={{
-              backgroundColor: isHoveringInteractive 
-                ? "rgba(212, 175, 55, 0.15)" 
-                : "transparent",
-            }}
-            transition={{ duration: 0.3 }}
-          />
-          
-          {/* Inner dot - only visible when not hovering interactive */}
-          <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-gold"
-            animate={{
-              opacity: isHoveringInteractive ? 0 : 1,
-              scale: isHoveringInteractive ? 0 : 1,
-            }}
-            transition={{ duration: 0.2 }}
-          />
-        </motion.div>
-      </motion.div>
+      />
+      
+      {/* Secondary warm ambient layer */}
+      <div
+        className="fixed pointer-events-none z-[9997]"
+        style={{
+          left: position.x,
+          top: position.y,
+          width: 300,
+          height: 300,
+          transform: 'translate(-50%, -50%)',
+          background: `radial-gradient(circle, rgba(245, 230, 163, 0.1) 0%, transparent 60%)`,
+          opacity: isVisible ? 1 : 0,
+          willChange: 'left, top',
+        }}
+      />
 
-      {/* Global style to hide cursor on all elements */}
+      {/* Global styles for interactive reflections */}
       <style>{`
-        *, *::before, *::after {
-          cursor: none !important;
+        /* Restore default cursor for usability */
+        * {
+          cursor: auto !important;
+        }
+        
+        a, button, [role="button"], .cursor-pointer {
+          cursor: pointer !important;
+        }
+        
+        /* Interactive reflection effect on buttons */
+        button:hover::after,
+        [role="button"]:hover::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to top,
+            rgba(245, 230, 163, 0.15) 0%,
+            rgba(212, 175, 55, 0.08) 30%,
+            transparent 60%
+          );
+          pointer-events: none;
+          border-radius: inherit;
+          animation: reflectionPulse 1.5s ease-out;
+        }
+        
+        /* Interactive reflection on property cards */
+        article:hover .card-reflection,
+        .group:hover .card-reflection {
+          opacity: 1;
+        }
+        
+        @keyframes reflectionPulse {
+          0% {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0.6;
+            transform: translateY(0);
+          }
         }
       `}</style>
     </>

@@ -111,6 +111,17 @@ const RoyalButton = forwardRef<HTMLButtonElement, RoyalButtonProps>(
           }}
         />
         
+        {/* Bottom-up light reflection on hover */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none rounded-sm"
+          style={{
+            background: `linear-gradient(to top, rgba(245, 230, 163, 0.15) 0%, rgba(212, 175, 55, 0.08) 30%, transparent 60%)`,
+          }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: isHovered ? 0.8 : 0, y: isHovered ? 0 : 10 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        />
+        
         {/* Diagonal sheen sweep animation - triggers on hover OR every 4 seconds */}
         <motion.div
           className="absolute inset-0 pointer-events-none"

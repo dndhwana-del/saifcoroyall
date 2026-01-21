@@ -47,6 +47,13 @@ const PropertyCard = ({
 
       {/* Content Container */}
       <div className="relative p-[4px] border-primary-foreground border shadow-royal">
+        {/* Card Reflection Layer - activated on hover */}
+        <div 
+          className="card-reflection absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none z-20"
+          style={{
+            background: 'linear-gradient(to top, rgba(245, 230, 163, 0.12) 0%, rgba(212, 175, 55, 0.06) 25%, transparent 50%)',
+          }}
+        />
         {/* Image with Arch Shape */}
         <div className="relative overflow-hidden rounded-t-[50%_20%] mx-[4px] mt-[4px]">
           <div className="aspect-[4/3] overflow-hidden">
