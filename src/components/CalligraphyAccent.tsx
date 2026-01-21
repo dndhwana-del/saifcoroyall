@@ -1,6 +1,13 @@
-const CalligraphyAccent = ({ className = "" }: { className?: string }) => {
+import { forwardRef } from "react";
+
+interface CalligraphyAccentProps {
+  className?: string;
+}
+
+const CalligraphyAccent = forwardRef<SVGSVGElement, CalligraphyAccentProps>(({ className = "" }, ref) => {
   return (
     <svg
+      ref={ref}
       viewBox="0 0 200 60"
       className={`w-32 h-10 ${className}`}
       fill="none"
@@ -36,6 +43,8 @@ const CalligraphyAccent = ({ className = "" }: { className?: string }) => {
       </defs>
     </svg>
   );
-};
+});
+
+CalligraphyAccent.displayName = "CalligraphyAccent";
 
 export default CalligraphyAccent;

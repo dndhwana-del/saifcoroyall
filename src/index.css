@@ -64,6 +64,11 @@
     --sidebar-accent-foreground: 8 27% 19%;
     --sidebar-border: 40 35% 80%;
     --sidebar-ring: 42 55% 58%;
+    /* Cardstock & Bronze for Property Cards */
+    --cardstock: 45 33% 98%; /* Off-white #FDFBF7 */
+    --bronze: 30 60% 50%; /* Metallic Bronze #CD7F32 */
+    --bronze-light: 32 55% 60%;
+    --bronze-dark: 28 65% 40%;
   }
 }
 
