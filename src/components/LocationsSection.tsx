@@ -6,6 +6,8 @@ interface LocationMarker {
   name: string;
   position: { top: string; left: string };
   description: string;
+  avgPrice: string;
+  properties: number;
 }
 
 const LocationsSection = () => {
@@ -14,38 +16,48 @@ const LocationsSection = () => {
       name: "Palm Jumeirah",
       position: { top: "35%", left: "25%" },
       description: "Iconic waterfront living",
+      avgPrice: "AED 85M",
+      properties: 12,
     },
     {
       name: "Downtown Dubai",
       position: { top: "45%", left: "55%" },
       description: "Heart of the metropolis",
+      avgPrice: "AED 65M",
+      properties: 8,
     },
     {
       name: "Emirates Hills",
       position: { top: "28%", left: "68%" },
       description: "The Beverly Hills of Dubai",
+      avgPrice: "AED 120M",
+      properties: 15,
     },
     {
       name: "The Pearl, Doha",
       position: { top: "65%", left: "78%" },
       description: "Qatar's luxury island",
+      avgPrice: "AED 95M",
+      properties: 6,
     },
   ];
 
   return (
-    <section className="relative py-24 bg-espresso-dark mashrabiya-pattern overflow-hidden">
+    <section className="relative py-20 bg-espresso-dark overflow-hidden">
+      {/* Seamless pattern continuation */}
+      <div className="absolute inset-0 mashrabiya-pattern opacity-50" />
+      
       {/* Ambient lighting overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-espresso/50 via-transparent to-espresso/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-espresso/30 via-transparent to-espresso/50 pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <ScrollReveal className="text-center max-w-3xl mx-auto mb-16">
+        <ScrollReveal className="text-center max-w-3xl mx-auto mb-12">
           <CalligraphyAccent className="mx-auto mb-6 w-32 h-8" />
-          <h2 className="text-3xl md:text-5xl font-royal mb-6 text-gold">
+          <h2 className="text-3xl md:text-5xl font-royal mb-4 text-gold">
             Prime Coordinates
           </h2>
           <p className="font-body text-lg text-sand/70 leading-relaxed">
-            Our portfolio spans the most coveted addresses across the Arabian Gulf, 
-            from iconic waterfronts to exclusive private enclaves.
+            Our portfolio spans the most coveted addresses across the Arabian Gulf
           </p>
         </ScrollReveal>
 
@@ -89,7 +101,7 @@ const LocationsSection = () => {
                     />
                   </svg>
 
-                  {/* Location Markers */}
+                  {/* Location Markers with Enhanced Tooltips */}
                   {locations.map((location, index) => (
                     <motion.div
                       key={location.name}
@@ -99,36 +111,75 @@ const LocationsSection = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
                     >
-                      {/* Pulsing Ring */}
-                      <motion.div
-                        className="absolute inset-0 -m-4 rounded-full border border-gold/50"
-                        animate={{
-                          scale: [1, 1.8, 1],
-                          opacity: [0.6, 0, 0.6],
-                        }}
-                        transition={{
-                          duration: 2.5,
-                          repeat: Infinity,
-                          delay: index * 0.3,
-                        }}
-                      />
+                      {/* Multiple Pulsing Rings - Concentric circles */}
+                      {[1, 2, 3].map((ring) => (
+                        <motion.div
+                          key={ring}
+                          className="absolute inset-0 -m-4 rounded-full border border-gold/40"
+                          animate={{
+                            scale: [1, 2 + ring * 0.5, 1],
+                            opacity: [0.5, 0, 0.5],
+                          }}
+                          transition={{
+                            duration: 2.5 + ring * 0.3,
+                            repeat: Infinity,
+                            delay: index * 0.3 + ring * 0.2,
+                          }}
+                        />
+                      ))}
                       
                       {/* Marker Dot */}
-                      <div className="relative w-4 h-4 bg-gold rounded-full shadow-[0_0_20px_4px_hsla(42,55%,58%,0.5)] group-hover:scale-125 transition-transform duration-300" />
+                      <motion.div 
+                        className="relative w-4 h-4 bg-gold rounded-full shadow-[0_0_25px_6px_hsla(42,55%,58%,0.6)] group-hover:scale-150 transition-transform duration-300"
+                        whileHover={{ scale: 1.5 }}
+                      />
                       
-                      {/* Tooltip */}
-                      <div className="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-20">
-                        <div className="bg-espresso/95 backdrop-blur-sm border border-bronze/40 px-4 py-2 whitespace-nowrap">
-                          <p className="font-royal text-sm text-gold tracking-wide">
-                            {location.name}
-                          </p>
-                          <p className="font-body text-xs text-sand/60 mt-0.5">
-                            {location.description}
-                          </p>
+                      {/* Glass Card Tooltip */}
+                      <motion.div 
+                        className="absolute left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-30"
+                        initial={{ x: -10 }}
+                        whileHover={{ x: 0 }}
+                      >
+                        <div className="bg-espresso/98 backdrop-blur-md border border-gold/50 shadow-[0_10px_40px_-10px_hsla(42,55%,50%,0.4)] min-w-[200px]">
+                          {/* Glass highlight */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-gold/10 via-transparent to-transparent" />
+                          
+                          <div className="relative p-4">
+                            <p className="font-royal text-base text-gold tracking-wide mb-1">
+                              {location.name}
+                            </p>
+                            <p className="font-display text-xs text-sand/60 italic mb-3">
+                              {location.description}
+                            </p>
+                            
+                            {/* Divider */}
+                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent mb-3" />
+                            
+                            {/* Price Info */}
+                            <div className="flex items-baseline justify-between gap-4">
+                              <div>
+                                <p className="font-body text-[10px] text-sand/50 uppercase tracking-wider">
+                                  Avg. Price
+                                </p>
+                                <p className="font-royal text-lg text-gold">
+                                  {location.avgPrice}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <p className="font-body text-[10px] text-sand/50 uppercase tracking-wider">
+                                  Listings
+                                </p>
+                                <p className="font-royal text-lg text-sand">
+                                  {location.properties}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                        
                         {/* Arrow */}
-                        <div className="absolute left-0 top-1/2 -translate-x-1 -translate-y-1/2 w-2 h-2 bg-espresso/95 border-l border-b border-bronze/40 rotate-45" />
-                      </div>
+                        <div className="absolute left-0 top-1/2 -translate-x-1.5 -translate-y-1/2 w-3 h-3 bg-espresso/98 border-l border-b border-gold/50 rotate-45" />
+                      </motion.div>
                     </motion.div>
                   ))}
 
@@ -166,13 +217,25 @@ const LocationsSection = () => {
         </ScrollReveal>
 
         {/* Location Legend */}
-        <ScrollReveal delay={0.4} className="mt-12">
-          <div className="flex flex-wrap justify-center gap-8">
+        <ScrollReveal delay={0.4} className="mt-10">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             {locations.map((location) => (
-              <div key={location.name} className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-gold rounded-full" />
-                <span className="font-body text-sm text-sand/60">{location.name}</span>
-              </div>
+              <motion.div 
+                key={location.name} 
+                className="flex items-center gap-3 group cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div 
+                  className="w-2.5 h-2.5 bg-gold rounded-full"
+                  animate={{ 
+                    boxShadow: ["0 0 0px hsla(42,55%,58%,0)", "0 0 12px hsla(42,55%,58%,0.8)", "0 0 0px hsla(42,55%,58%,0)"]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <span className="font-body text-sm text-sand/60 group-hover:text-gold transition-colors">
+                  {location.name}
+                </span>
+              </motion.div>
             ))}
           </div>
         </ScrollReveal>

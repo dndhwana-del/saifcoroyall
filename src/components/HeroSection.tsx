@@ -4,20 +4,24 @@ import CalligraphyAccent from "./CalligraphyAccent";
 import RoyalButton from "./RoyalButton";
 import GoldenArchway from "./GoldenArchway";
 import RoyalDivider from "./RoyalDivider";
+import MagneticButton from "./MagneticButton";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section className="relative min-h-[110vh] flex items-center justify-center pt-20 pb-32 overflow-hidden">
+      {/* Continuous background - no hard cuts */}
+      <div className="absolute inset-0 bg-background" />
+      
       {/* Warm ambient glow overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/90 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent z-10" />
       <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 z-10" />
       
       {/* Golden hour vignette */}
       <div className="absolute inset-0 shadow-[inset_0_0_200px_60px_hsla(42,55%,58%,0.08)] z-10 pointer-events-none" />
 
       {/* Hero Image with Archway Frame */}
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16">
-        <GoldenArchway className="w-full max-w-6xl h-[70vh] md:h-[80vh]">
+      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16 pb-24">
+        <GoldenArchway className="w-full max-w-6xl h-[75vh] md:h-[85vh]">
           <div className="relative w-full h-full overflow-hidden rounded-t-archway">
             {/* Ken Burns Effect - Slow zoom animation */}
             <motion.img
@@ -25,18 +29,18 @@ const HeroSection = () => {
               alt="Luxurious Arabian Gulf Palace Interior"
               className="w-full h-full object-cover object-center"
               initial={{ scale: 1 }}
-              animate={{ scale: 1.1 }}
+              animate={{ scale: 1.15 }}
               transition={{
-                duration: 20,
+                duration: 25,
                 repeat: Infinity,
                 repeatType: "reverse",
                 ease: "linear",
               }}
             />
             {/* Warm overlay on image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 via-espresso/20 to-transparent" />
-            {/* Text readability gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/30 to-transparent" />
+            {/* Text readability gradient overlay - stronger at bottom */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           </div>
         </GoldenArchway>
       </div>
@@ -59,7 +63,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-royal leading-tight mb-6 text-shimmer"
+            className="text-4xl md:text-6xl lg:text-7xl font-royal leading-tight mb-6 text-shimmer drop-shadow-lg"
           >
             Royal Gulf Estates
           </motion.h1>
@@ -69,7 +73,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="font-display text-xl md:text-2xl text-foreground/80 mb-4 italic"
+            className="font-display text-xl md:text-2xl text-sand/90 mb-4 italic drop-shadow-md"
           >
             Where Heritage Meets Magnificence
           </motion.p>
@@ -87,41 +91,45 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="font-body text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed text-gray-50"
+            className="font-body text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed text-gray-100 drop-shadow-md"
           >
             Discover an exclusive collection of palatial residences, 
             curated for those who seek the pinnacle of Arabian luxury and timeless elegance.
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons with Magnetic Effect */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-            <RoyalButton size="lg">
-              View Collection
-            </RoyalButton>
-            <RoyalButton variant="outline" size="lg">
-              Private Consultation
-            </RoyalButton>
+            <MagneticButton strength={0.4}>
+              <RoyalButton size="lg">
+                View Collection
+              </RoyalButton>
+            </MagneticButton>
+            <MagneticButton strength={0.4}>
+              <RoyalButton variant="outline" size="lg" className="border-sand/50 text-sand hover:bg-sand hover:text-espresso">
+                Private Consultation
+              </RoyalButton>
+            </MagneticButton>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - positioned to overlap next section visually */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20"
       >
-        <div className="flex flex-col items-center gap-2 text-primary/60">
-          <span className="font-body text-xs tracking-[0.3em] uppercase">Explore</span>
+        <div className="flex flex-col items-center gap-2 text-gold/80">
+          <span className="font-body text-xs tracking-[0.3em] uppercase">Discover</span>
           <motion.div
-            className="w-px h-12 bg-gradient-to-b from-primary/60 to-transparent"
-            animate={{ y: [0, 8, 0] }}
+            className="w-px h-16 bg-gradient-to-b from-gold/60 to-transparent"
+            animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
