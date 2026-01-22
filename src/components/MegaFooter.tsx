@@ -5,14 +5,13 @@ import { z } from "zod";
 import CalligraphyAccent from "./CalligraphyAccent";
 import { useToast } from "@/hooks/use-toast";
 import saifcoLogo from "@/assets/saifco-logo.jpg";
-
 const emailSchema = z.string().email("Please enter a valid email address");
-
 const MegaFooter = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
@@ -20,65 +19,76 @@ const MegaFooter = () => {
       setEmailError(null);
     }
   };
-
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     const result = emailSchema.safeParse(email);
     if (!result.success) {
       setEmailError(result.error.errors[0].message);
       return;
     }
-
     toast({
       title: "Thank you for subscribing",
-      description: "You'll receive exclusive property previews soon.",
+      description: "You'll receive exclusive property previews soon."
     });
     setEmail("");
     setEmailError(null);
   };
-
-  const offices = [
-    { city: "Dubai", address: "Emirates Towers, DIFC" },
-    { city: "Riyadh", address: "Kingdom Centre, Olaya" },
-    { city: "London", address: "One Hyde Park, Knightsbridge" },
-  ];
-
-  const quickLinks = [
-    { label: "Our Heritage", href: "#heritage" },
-    { label: "Royal Collection", href: "#collection" },
-    { label: "Off-Plan Estates", href: "#" },
-    { label: "Private Viewings", href: "#" },
-    { label: "Press & Media", href: "#" },
-  ];
-
-  const socialLinks = [
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-  ];
-
-  return (
-    <footer className="relative bg-espresso text-sand overflow-hidden">
+  const offices = [{
+    city: "Dubai",
+    address: "Emirates Towers, DIFC"
+  }, {
+    city: "Riyadh",
+    address: "Kingdom Centre, Olaya"
+  }, {
+    city: "London",
+    address: "One Hyde Park, Knightsbridge"
+  }];
+  const quickLinks = [{
+    label: "Our Heritage",
+    href: "#heritage"
+  }, {
+    label: "Royal Collection",
+    href: "#collection"
+  }, {
+    label: "Off-Plan Estates",
+    href: "#"
+  }, {
+    label: "Private Viewings",
+    href: "#"
+  }, {
+    label: "Press & Media",
+    href: "#"
+  }];
+  const socialLinks = [{
+    icon: Instagram,
+    href: "#",
+    label: "Instagram"
+  }, {
+    icon: Facebook,
+    href: "#",
+    label: "Facebook"
+  }, {
+    icon: Twitter,
+    href: "#",
+    label: "Twitter"
+  }, {
+    icon: Linkedin,
+    href: "#",
+    label: "LinkedIn"
+  }];
+  return <footer className="relative bg-espresso text-sand overflow-hidden">
       {/* Islamic Geometric Pattern Texture Overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z M30 10L50 30L30 50L10 30z M30 20L40 30L30 40L20 30z' fill='%23CCA35A' fill-opacity='1'/%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px',
-        }}
-      />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z M30 10L50 30L30 50L10 30z M30 20L40 30L30 40L20 30z' fill='%23CCA35A' fill-opacity='1'/%3E%3C/svg%3E")`,
+      backgroundSize: '60px 60px'
+    }} />
 
       {/* Massive Watermark */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
-        <span 
-          className="font-royal text-[20vw] tracking-[0.3em] uppercase whitespace-nowrap opacity-[0.05]"
-          style={{ 
-            color: 'hsl(42, 55%, 58%)',
-            textShadow: '0 0 100px hsla(42, 55%, 58%, 0.4)',
-          }}
-        >
+        <span className="font-royal text-[20vw] tracking-[0.3em] uppercase whitespace-nowrap opacity-[0.05]" style={{
+        color: 'hsl(42, 55%, 58%)',
+        textShadow: '0 0 100px hsla(42, 55%, 58%, 0.4)'
+      }}>
           ROYAL GULF
         </span>
       </div>
@@ -92,22 +102,16 @@ const MegaFooter = () => {
         <div className="absolute left-1/2 -translate-x-1/2 -top-2">
           <div className="relative">
             {/* Outer glow */}
-            <div 
-              className="absolute inset-0 w-4 h-4 rotate-45"
-              style={{
-                background: 'radial-gradient(circle, hsla(42, 55%, 58%, 0.6) 0%, transparent 70%)',
-                filter: 'blur(8px)',
-                transform: 'rotate(45deg) scale(2)',
-              }}
-            />
+            <div className="absolute inset-0 w-4 h-4 rotate-45" style={{
+            background: 'radial-gradient(circle, hsla(42, 55%, 58%, 0.6) 0%, transparent 70%)',
+            filter: 'blur(8px)',
+            transform: 'rotate(45deg) scale(2)'
+          }} />
             {/* Diamond */}
-            <div 
-              className="w-4 h-4 rotate-45 border border-gold/80"
-              style={{
-                background: 'linear-gradient(135deg, hsl(45, 65%, 75%) 0%, hsl(42, 55%, 55%) 50%, hsl(38, 60%, 45%) 100%)',
-                boxShadow: '0 0 20px hsla(42, 55%, 58%, 0.6), 0 0 40px hsla(42, 55%, 58%, 0.3)',
-              }}
-            />
+            <div className="w-4 h-4 rotate-45 border border-gold/80" style={{
+            background: 'linear-gradient(135deg, hsl(45, 65%, 75%) 0%, hsl(42, 55%, 55%) 50%, hsl(38, 60%, 45%) 100%)',
+            boxShadow: '0 0 20px hsla(42, 55%, 58%, 0.6), 0 0 40px hsla(42, 55%, 58%, 0.3)'
+          }} />
           </div>
         </div>
       </div>
@@ -134,93 +138,73 @@ const MegaFooter = () => {
 
           {/* Column 2: Office Locations */}
           <div>
-            <h4 
-              className="font-royal text-lg tracking-[0.25em] mb-6 flex items-center gap-2 uppercase"
-              style={{ color: 'hsl(45, 70%, 75%)' }}
-            >
+            <h4 className="font-royal text-lg tracking-[0.25em] mb-6 flex items-center gap-2 uppercase" style={{
+            color: 'hsl(45, 70%, 75%)'
+          }}>
               <MapPin size={18} strokeWidth={1.5} className="text-bronze" />
               Global Offices
             </h4>
             <ul className="space-y-4">
-              {offices.map((office) => (
-                <motion.li 
-                  key={office.city} 
-                  className="group cursor-pointer"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span 
-                    className="font-body text-sand font-medium block transition-all duration-300 group-hover:text-gold"
-                    style={{ 
-                      textShadow: 'none',
-                      transition: 'text-shadow 0.3s ease, color 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.textShadow = '0 0 15px hsla(42, 55%, 58%, 0.5)'}
-                    onMouseLeave={(e) => e.currentTarget.style.textShadow = 'none'}
-                  >
+              {offices.map(office => <motion.li key={office.city} className="group cursor-pointer" whileHover={{
+              x: 5
+            }} transition={{
+              duration: 0.2
+            }}>
+                  <span className="font-body text-sand font-medium block transition-all duration-300 group-hover:text-gold" style={{
+                textShadow: 'none',
+                transition: 'text-shadow 0.3s ease, color 0.3s ease'
+              }} onMouseEnter={e => e.currentTarget.style.textShadow = '0 0 15px hsla(42, 55%, 58%, 0.5)'} onMouseLeave={e => e.currentTarget.style.textShadow = 'none'}>
                     {office.city}
                   </span>
                   <span className="font-body text-sm text-sand/50">
                     {office.address}
                   </span>
-                </motion.li>
-              ))}
+                </motion.li>)}
             </ul>
           </div>
 
           {/* Column 3: Quick Links */}
           <div>
-            <h4 
-              className="font-royal text-lg tracking-[0.25em] mb-6 uppercase"
-              style={{ color: 'hsl(45, 70%, 75%)' }}
-            >
+            <h4 className="font-royal text-lg tracking-[0.25em] mb-6 uppercase" style={{
+            color: 'hsl(45, 70%, 75%)'
+          }}>
               Explore
             </h4>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <motion.a
-                    href={link.href}
-                    className="font-body text-sand/70 inline-block transition-colors duration-300"
-                    whileHover={{ x: 5, color: 'hsl(42, 55%, 58%)' }}
-                    transition={{ duration: 0.2 }}
-                    style={{ textShadow: 'none' }}
-                    onMouseEnter={(e) => e.currentTarget.style.textShadow = '0 0 12px hsla(42, 55%, 58%, 0.4)'}
-                    onMouseLeave={(e) => e.currentTarget.style.textShadow = 'none'}
-                  >
+              {quickLinks.map(link => <li key={link.label}>
+                  <motion.a href={link.href} className="font-body text-sand/70 inline-block transition-colors duration-300" whileHover={{
+                x: 5,
+                color: 'hsl(42, 55%, 58%)'
+              }} transition={{
+                duration: 0.2
+              }} style={{
+                textShadow: 'none'
+              }} onMouseEnter={e => e.currentTarget.style.textShadow = '0 0 12px hsla(42, 55%, 58%, 0.4)'} onMouseLeave={e => e.currentTarget.style.textShadow = 'none'}>
                     {link.label}
                   </motion.a>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
           {/* Column 4: Contact & Newsletter */}
           <div>
-            <h4 
-              className="font-royal text-lg tracking-[0.25em] mb-6 uppercase"
-              style={{ color: 'hsl(45, 70%, 75%)' }}
-            >
+            <h4 className="font-royal text-lg tracking-[0.25em] mb-6 uppercase" style={{
+            color: 'hsl(45, 70%, 75%)'
+          }}>
               Private Invitation
             </h4>
             
             {/* Phone Number - Prominent Gold */}
-            <motion.a
-              href="tel:+971528218452"
-              className="flex items-center gap-3 mb-6 group"
-              whileHover={{ x: 5 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.a href="tel:+971528218452" className="flex items-center gap-3 mb-6 group" whileHover={{
+            x: 5
+          }} transition={{
+            duration: 0.2
+          }}>
               <Phone size={20} strokeWidth={1.5} className="text-gold" />
-              <span 
-                className="font-display text-xl tracking-wide transition-all duration-300"
-                style={{ 
-                  color: 'hsl(42, 55%, 58%)',
-                  textShadow: 'none',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.textShadow = '0 0 20px hsla(42, 55%, 58%, 0.5)'}
-                onMouseLeave={(e) => e.currentTarget.style.textShadow = 'none'}
-              >
+              <span className="font-display text-xl tracking-wide transition-all duration-300" style={{
+              color: 'hsl(42, 55%, 58%)',
+              textShadow: 'none'
+            }} onMouseEnter={e => e.currentTarget.style.textShadow = '0 0 20px hsla(42, 55%, 58%, 0.5)'} onMouseLeave={e => e.currentTarget.style.textShadow = 'none'}>
                 +971 52 821 8452
               </span>
             </motion.a>
@@ -233,66 +217,42 @@ const MegaFooter = () => {
             <form onSubmit={handleNewsletterSubmit} className="mb-8">
               <div className="flex items-end gap-3">
                 <div className="flex-1 relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="Your Email"
-                    required
-                    aria-label="Email address for newsletter"
-                    aria-describedby={emailError ? "email-error" : undefined}
-                    className={`w-full bg-transparent border-0 border-b-2 ${
-                      emailError ? 'border-red-400' : 'border-gold/40'
-                    } px-0 py-3 font-body text-sand placeholder:text-sand/40 focus:outline-none focus:border-gold transition-colors`}
-                  />
+                  <input type="email" value={email} onChange={handleEmailChange} placeholder="Your Email" required aria-label="Email address for newsletter" aria-describedby={emailError ? "email-error" : undefined} className={`w-full bg-transparent border-0 border-b-2 ${emailError ? 'border-red-400' : 'border-gold/40'} px-0 py-3 font-body text-sand placeholder:text-sand/40 focus:outline-none focus:border-gold transition-colors`} />
                   {/* Subtle glow line under input */}
                   <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
                 </div>
                 {/* Solid Gold Metallic Button */}
-                <motion.button
-                  type="submit"
-                  className="px-6 py-2.5 font-royal text-sm tracking-[0.15em] uppercase"
-                  style={{
-                    background: 'linear-gradient(135deg, hsl(45, 65%, 70%) 0%, hsl(42, 55%, 55%) 50%, hsl(38, 60%, 45%) 100%)',
-                    color: 'hsl(8, 27%, 12%)',
-                    boxShadow: '0 4px 15px hsla(42, 55%, 40%, 0.4), inset 0 1px 0 hsla(45, 70%, 85%, 0.4)',
-                    border: '1px solid hsla(42, 55%, 65%, 0.5)',
-                  }}
-                  whileHover={{ 
-                    scale: 1.02,
-                    boxShadow: '0 6px 25px hsla(42, 55%, 40%, 0.5), inset 0 1px 0 hsla(45, 70%, 85%, 0.5)',
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <motion.button type="submit" className="px-6 py-2.5 font-royal text-sm tracking-[0.15em] uppercase" style={{
+                background: 'linear-gradient(135deg, hsl(45, 65%, 70%) 0%, hsl(42, 55%, 55%) 50%, hsl(38, 60%, 45%) 100%)',
+                color: 'hsl(8, 27%, 12%)',
+                boxShadow: '0 4px 15px hsla(42, 55%, 40%, 0.4), inset 0 1px 0 hsla(45, 70%, 85%, 0.4)',
+                border: '1px solid hsla(42, 55%, 65%, 0.5)'
+              }} whileHover={{
+                scale: 1.02,
+                boxShadow: '0 6px 25px hsla(42, 55%, 40%, 0.5), inset 0 1px 0 hsla(45, 70%, 85%, 0.5)'
+              }} whileTap={{
+                scale: 0.98
+              }}>
                   Join
                 </motion.button>
               </div>
-              {emailError && (
-                <p id="email-error" className="mt-2 text-xs text-red-400 font-body">
+              {emailError && <p id="email-error" className="mt-2 text-xs text-red-400 font-body">
                   {emailError}
-                </p>
-              )}
+                </p>}
             </form>
 
             {/* Social Icons */}
             <div className="flex items-center gap-4">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-10 h-10 border border-bronze/40 flex items-center justify-center text-bronze transition-all duration-300"
-                  whileHover={{ 
-                    scale: 1.1,
-                    borderColor: 'hsl(42, 55%, 58%)',
-                    backgroundColor: 'hsla(42, 55%, 58%, 0.1)',
-                    boxShadow: '0 0 20px hsla(42, 55%, 58%, 0.3)',
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
+              {socialLinks.map(social => <motion.a key={social.label} href={social.href} aria-label={social.label} className="w-10 h-10 border border-bronze/40 flex items-center justify-center text-bronze transition-all duration-300" whileHover={{
+              scale: 1.1,
+              borderColor: 'hsl(42, 55%, 58%)',
+              backgroundColor: 'hsla(42, 55%, 58%, 0.1)',
+              boxShadow: '0 0 20px hsla(42, 55%, 58%, 0.3)'
+            }} whileTap={{
+              scale: 0.95
+            }}>
                   <social.icon size={18} strokeWidth={1.5} />
-                </motion.a>
-              ))}
+                </motion.a>)}
             </div>
           </div>
         </div>
@@ -310,60 +270,38 @@ const MegaFooter = () => {
           <div className="flex flex-col items-center gap-6">
             {/* Copyright + Saifco Branding */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-              <p 
-                className="font-body text-sm text-center"
-                style={{ color: 'hsl(42, 50%, 60%)' }}
-              >
+              <p className="font-body text-sm text-center" style={{
+              color: 'hsl(42, 50%, 60%)'
+            }}>
                 © 2024 Royal Gulf Estates. All Rights Reserved.
               </p>
               
               {/* Saifco Branding */}
               <div className="flex items-center gap-2">
-                <span 
-                  className="font-body text-xs tracking-wide"
-                  style={{ color: 'hsl(42, 50%, 55%)' }}
-                >
-                  Made by
+                <span className="font-body text-xs tracking-wide" style={{
+                color: 'hsl(42, 50%, 55%)'
+              }}>
+                  Made by Saifco 
                 </span>
-                <a 
-                  href="#" 
-                  className="flex items-center gap-1.5 group"
-                  aria-label="Saifco - Website Creator"
-                >
-                  <img 
-                    src={saifcoLogo} 
-                    alt="Saifco Logo" 
-                    className="h-5 w-auto object-contain"
-                    style={{
-                      filter: 'sepia(100%) saturate(300%) brightness(90%) hue-rotate(5deg)',
-                    }}
-                  />
+                <a href="#" className="flex items-center gap-1.5 group" aria-label="Saifco - Website Creator">
+                  
                 </a>
               </div>
             </div>
             
             {/* Legal Links */}
             <div className="flex items-center justify-center gap-6 md:gap-8">
-              {['Privacy Policy', 'Terms of Service', 'Cookie Preferences'].map((link) => (
-                <motion.a 
-                  key={link}
-                  href="#" 
-                  className="font-body text-xs text-sand/40 transition-all duration-300"
-                  whileHover={{ 
-                    x: 3,
-                    color: 'hsl(42, 55%, 58%)',
-                    textShadow: '0 0 10px hsla(42, 55%, 58%, 0.3)',
-                  }}
-                >
+              {['Privacy Policy', 'Terms of Service', 'Cookie Preferences'].map(link => <motion.a key={link} href="#" className="font-body text-xs text-sand/40 transition-all duration-300" whileHover={{
+              x: 3,
+              color: 'hsl(42, 55%, 58%)',
+              textShadow: '0 0 10px hsla(42, 55%, 58%, 0.3)'
+            }}>
                   {link}
-                </motion.a>
-              ))}
+                </motion.a>)}
             </div>
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default MegaFooter;
