@@ -1,26 +1,25 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import heroSlide1 from "@/assets/hero-slide-1.jpg";
-import heroSlide2 from "@/assets/hero-slide-2.jpg";
-import heroSlide3 from "@/assets/hero-slide-3.jpg";
-import heroSlide4 from "@/assets/hero-slide-4.jpg";
-import heroSlide5 from "@/assets/hero-slide-5.jpg";
+import heroPalace from "@/assets/hero-palace.jpg";
 import CalligraphyAccent from "./CalligraphyAccent";
 import RoyalButton from "./RoyalButton";
 import RoyalDivider from "./RoyalDivider";
 import MagneticButton from "./MagneticButton";
 
-const heroSlides = [heroSlide1, heroSlide2, heroSlide3, heroSlide4, heroSlide5];
+// Using the single palace image with Ken Burns effect
+const heroSlides = [heroPalace];
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto-advance slides every 5 seconds
+  // Auto-advance slides every 5 seconds (when multiple slides available)
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    if (heroSlides.length > 1) {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      }, 5000);
+      return () => clearInterval(timer);
+    }
   }, []);
 
   return (
@@ -66,21 +65,23 @@ const HeroSection = () => {
       {/* Thin navbar fade - only top 80px, espresso NOT white */}
       <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-espresso/50 to-transparent z-10" />
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
-        {heroSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-500 ${
-              index === currentSlide 
-                ? 'bg-gold w-8' 
-                : 'bg-sand/40 hover:bg-sand/60'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
+      {/* Slide Indicators - only show when multiple slides */}
+      {heroSlides.length > 1 && (
+        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-500 ${
+                index === currentSlide 
+                  ? 'bg-gold w-8' 
+                  : 'bg-sand/40 hover:bg-sand/60'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Hero Content */}
       <div className="relative z-20 container mx-auto px-6 text-center">
