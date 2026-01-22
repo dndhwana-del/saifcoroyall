@@ -138,7 +138,7 @@ const MegaFooter = () => {
 
           {/* Column 2: Office Locations */}
           <div>
-            <h4 className="font-royal text-lg tracking-[0.25em] mb-6 flex items-center gap-2 uppercase" style={{
+            <h4 className="text-lg tracking-[0.25em] mb-6 flex items-center gap-2 uppercase font-serif" style={{
             color: 'hsl(45, 70%, 75%)'
           }}>
               <MapPin size={18} strokeWidth={1.5} className="text-bronze" />
@@ -165,7 +165,7 @@ const MegaFooter = () => {
 
           {/* Column 3: Quick Links */}
           <div>
-            <h4 className="font-royal text-lg tracking-[0.25em] mb-6 uppercase" style={{
+            <h4 className="text-lg tracking-[0.25em] mb-6 uppercase font-serif" style={{
             color: 'hsl(45, 70%, 75%)'
           }}>
               Explore
@@ -188,7 +188,7 @@ const MegaFooter = () => {
 
           {/* Column 4: Contact & Newsletter */}
           <div>
-            <h4 className="font-royal text-lg tracking-[0.25em] mb-6 uppercase" style={{
+            <h4 className="text-lg tracking-[0.25em] mb-6 uppercase font-serif" style={{
             color: 'hsl(45, 70%, 75%)'
           }}>
               Private Invitation
