@@ -1,9 +1,45 @@
 import { motion } from "framer-motion";
 import { MapPin, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";
+import { useState } from "react";
+import { z } from "zod";
 import CalligraphyAccent from "./CalligraphyAccent";
 import RoyalButton from "./RoyalButton";
+import { useToast } from "@/hooks/use-toast";
+
+const emailSchema = z.string().email("Please enter a valid email address");
 
 const MegaFooter = () => {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    // Clear error when user starts typing
+    if (emailError) {
+      setEmailError(null);
+    }
+  };
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const result = emailSchema.safeParse(email);
+    if (!result.success) {
+      setEmailError(result.error.errors[0].message);
+      return;
+    }
+
+    // Show success toast (no backend yet)
+    toast({
+      title: "Thank you for subscribing",
+      description: "You'll receive exclusive property previews soon.",
+    });
+    setEmail("");
+    setEmailError(null);
+  };
+
   const offices = [
     { city: "Dubai", address: "Emirates Towers, DIFC" },
     { city: "Riyadh", address: "Kingdom Centre, Olaya" },
@@ -94,16 +130,30 @@ const MegaFooter = () => {
             <p className="font-body text-sm text-sand/60 mb-4">
               Receive exclusive previews of off-market properties.
             </p>
-            <div className="flex gap-2 mb-8">
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="flex-1 bg-espresso-dark/50 border border-bronze/30 px-4 py-2.5 font-body text-sm text-sand placeholder:text-sand/40 focus:outline-none focus:border-gold/60 transition-colors"
-              />
-              <RoyalButton size="sm" className="px-4">
-                Join
-              </RoyalButton>
-            </div>
+            <form onSubmit={handleNewsletterSubmit} className="mb-8">
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  placeholder="Your Email"
+                  required
+                  aria-label="Email address for newsletter"
+                  aria-describedby={emailError ? "email-error" : undefined}
+                  className={`flex-1 bg-espresso-dark/50 border ${
+                    emailError ? 'border-red-400' : 'border-bronze/30'
+                  } px-4 py-2.5 font-body text-sm text-sand placeholder:text-sand/40 focus:outline-none focus:border-gold/60 transition-colors`}
+                />
+                <RoyalButton type="submit" size="sm" className="px-4">
+                  Join
+                </RoyalButton>
+              </div>
+              {emailError && (
+                <p id="email-error" className="mt-2 text-xs text-red-400 font-body">
+                  {emailError}
+                </p>
+              )}
+            </form>
 
             {/* Social Icons */}
             <div className="flex items-center gap-4">
