@@ -16,7 +16,6 @@ const MegaFooter = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    // Clear error when user starts typing
     if (emailError) {
       setEmailError(null);
     }
@@ -31,7 +30,6 @@ const MegaFooter = () => {
       return;
     }
 
-    // Show success toast (no backend yet)
     toast({
       title: "Thank you for subscribing",
       description: "You'll receive exclusive property previews soon.",
@@ -62,15 +60,53 @@ const MegaFooter = () => {
   ];
 
   return (
-    <footer className="bg-espresso text-sand border-t border-gold/20">
+    <footer className="relative bg-espresso text-sand overflow-hidden">
+      {/* Islamic Geometric Pattern Texture Overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z M30 10L50 30L30 50L10 30z M30 20L40 30L30 40L20 30z' fill='%23CCA35A' fill-opacity='1'/%3E%3C/svg%3E")`,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      {/* Massive Watermark */}
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
+        <span 
+          className="font-royal text-[18vw] tracking-[0.3em] uppercase whitespace-nowrap opacity-[0.04]"
+          style={{ 
+            color: 'hsl(42, 55%, 58%)',
+            textShadow: '0 0 80px hsla(42, 55%, 58%, 0.3)',
+          }}
+        >
+          ROYAL GULF
+        </span>
+      </div>
+
+      {/* Glowing Gold Top Separator with Diamond */}
+      <div className="absolute top-0 left-0 right-0 h-px">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold to-transparent opacity-40 blur-sm" />
+        {/* Central Diamond Accent */}
+        <div className="absolute left-1/2 -translate-x-1/2 -top-1.5">
+          <div 
+            className="w-3 h-3 rotate-45 border border-gold/80"
+            style={{
+              background: 'linear-gradient(135deg, hsl(45, 60%, 70%) 0%, hsl(42, 55%, 50%) 50%, hsl(38, 65%, 45%) 100%)',
+              boxShadow: '0 0 15px hsla(42, 55%, 58%, 0.5), 0 0 30px hsla(42, 55%, 58%, 0.3)',
+            }}
+          />
+        </div>
+      </div>
+
       {/* Main Footer Content */}
-      <div className="container mx-auto px-6 py-16">
+      <div className="relative container mx-auto px-6 py-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Column 1: Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <CalligraphyAccent className="w-16 h-5" />
-              <span className="font-royal text-lg tracking-[0.2em] text-gold">
+              <span className="font-royal text-lg tracking-[0.25em] text-gold">
                 ROYAL GULF
               </span>
             </div>
@@ -85,38 +121,62 @@ const MegaFooter = () => {
 
           {/* Column 2: Office Locations */}
           <div>
-            <h4 className="font-royal text-lg text-gold tracking-wider mb-6 flex items-center gap-2">
+            <h4 
+              className="font-royal text-lg tracking-[0.2em] mb-6 flex items-center gap-2"
+              style={{ color: 'hsl(45, 65%, 72%)' }}
+            >
               <MapPin size={18} strokeWidth={1.5} className="text-bronze" />
               Global Offices
             </h4>
             <ul className="space-y-4">
               {offices.map((office) => (
-                <li key={office.city} className="group">
-                  <span className="font-body text-sand font-medium block group-hover:text-gold transition-colors">
+                <motion.li 
+                  key={office.city} 
+                  className="group cursor-pointer"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <span 
+                    className="font-body text-sand font-medium block transition-all duration-300 group-hover:text-gold"
+                    style={{ 
+                      textShadow: 'none',
+                      transition: 'text-shadow 0.3s ease, color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.textShadow = '0 0 15px hsla(42, 55%, 58%, 0.5)'}
+                    onMouseLeave={(e) => e.currentTarget.style.textShadow = 'none'}
+                  >
                     {office.city}
                   </span>
                   <span className="font-body text-sm text-sand/50">
                     {office.address}
                   </span>
-                </li>
+                </motion.li>
               ))}
             </ul>
           </div>
 
           {/* Column 3: Quick Links */}
           <div>
-            <h4 className="font-royal text-lg text-gold tracking-wider mb-6">
+            <h4 
+              className="font-royal text-lg tracking-[0.2em] mb-6"
+              style={{ color: 'hsl(45, 65%, 72%)' }}
+            >
               Explore
             </h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <motion.a
                     href={link.href}
-                    className="font-body text-sand/70 hover:text-gold transition-colors duration-300 inline-block relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-gold hover:after:w-full after:transition-all after:duration-300"
+                    className="font-body text-sand/70 inline-block transition-colors duration-300"
+                    whileHover={{ x: 5, color: 'hsl(42, 55%, 58%)' }}
+                    transition={{ duration: 0.2 }}
+                    style={{ textShadow: 'none' }}
+                    onMouseEnter={(e) => e.currentTarget.style.textShadow = '0 0 12px hsla(42, 55%, 58%, 0.4)'}
+                    onMouseLeave={(e) => e.currentTarget.style.textShadow = 'none'}
                   >
                     {link.label}
-                  </a>
+                  </motion.a>
                 </li>
               ))}
             </ul>
@@ -124,29 +184,55 @@ const MegaFooter = () => {
 
           {/* Column 4: Newsletter & Social */}
           <div>
-            <h4 className="font-royal text-lg text-gold tracking-wider mb-6">
+            <h4 
+              className="font-royal text-lg tracking-[0.2em] mb-6"
+              style={{ color: 'hsl(45, 65%, 72%)' }}
+            >
               Private Invitation
             </h4>
-            <p className="font-body text-sm text-sand/60 mb-4">
+            <p className="font-body text-sm text-sand/60 mb-6">
               Receive exclusive previews of off-market properties.
             </p>
+            
+            {/* Luxury Newsletter Input - Minimalist Gold Line */}
             <form onSubmit={handleNewsletterSubmit} className="mb-8">
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  placeholder="Your Email"
-                  required
-                  aria-label="Email address for newsletter"
-                  aria-describedby={emailError ? "email-error" : undefined}
-                  className={`flex-1 bg-espresso-dark/50 border ${
-                    emailError ? 'border-red-400' : 'border-bronze/30'
-                  } px-4 py-2.5 font-body text-sm text-sand placeholder:text-sand/40 focus:outline-none focus:border-gold/60 transition-colors`}
-                />
-                <RoyalButton type="submit" size="sm" className="px-4">
+              <div className="flex items-end gap-3">
+                <div className="flex-1 relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    placeholder="Your Email"
+                    required
+                    aria-label="Email address for newsletter"
+                    aria-describedby={emailError ? "email-error" : undefined}
+                    className={`w-full bg-transparent border-0 border-b-2 ${
+                      emailError ? 'border-red-400' : 'border-gold/40'
+                    } px-0 py-3 font-body text-sand placeholder:text-sand/40 focus:outline-none focus:border-gold transition-colors`}
+                    style={{ 
+                      background: 'transparent',
+                    }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+                </div>
+                {/* Solid Gold Metallic Button */}
+                <motion.button
+                  type="submit"
+                  className="px-6 py-2.5 font-royal text-sm tracking-[0.15em] uppercase"
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(45, 60%, 65%) 0%, hsl(42, 55%, 50%) 50%, hsl(38, 65%, 45%) 100%)',
+                    color: 'hsl(8, 27%, 12%)',
+                    boxShadow: '0 4px 15px hsla(42, 55%, 40%, 0.4), inset 0 1px 0 hsla(45, 70%, 80%, 0.3)',
+                    border: '1px solid hsla(42, 55%, 60%, 0.5)',
+                  }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: '0 6px 25px hsla(42, 55%, 40%, 0.5), inset 0 1px 0 hsla(45, 70%, 80%, 0.4)',
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
                   Join
-                </RoyalButton>
+                </motion.button>
               </div>
               {emailError && (
                 <p id="email-error" className="mt-2 text-xs text-red-400 font-body">
@@ -162,8 +248,13 @@ const MegaFooter = () => {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 border border-bronze/40 flex items-center justify-center text-bronze hover:text-gold hover:border-gold hover:bg-gold/10 transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
+                  className="w-10 h-10 border border-bronze/40 flex items-center justify-center text-bronze transition-all duration-300"
+                  whileHover={{ 
+                    scale: 1.1,
+                    borderColor: 'hsl(42, 55%, 58%)',
+                    backgroundColor: 'hsla(42, 55%, 58%, 0.1)',
+                    boxShadow: '0 0 20px hsla(42, 55%, 58%, 0.3)',
+                  }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <social.icon size={18} strokeWidth={1.5} />
@@ -174,23 +265,37 @@ const MegaFooter = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gold/10">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="font-body text-sm text-sand/50">
+      {/* Bottom Bar with Gold Line Separator */}
+      <div className="relative">
+        {/* Fading Gold Line */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+        </div>
+        
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex flex-col items-center gap-6">
+            {/* Centered Copyright */}
+            <p 
+              className="font-body text-sm text-center"
+              style={{ color: 'hsl(42, 45%, 55%)' }}
+            >
               © 2024 Royal Gulf Estates. All Rights Reserved.
             </p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="font-body text-xs text-sand/40 hover:text-gold transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="font-body text-xs text-sand/40 hover:text-gold transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="font-body text-xs text-sand/40 hover:text-gold transition-colors">
-                Cookie Preferences
-              </a>
+            {/* Legal Links */}
+            <div className="flex items-center justify-center gap-8">
+              {['Privacy Policy', 'Terms of Service', 'Cookie Preferences'].map((link) => (
+                <motion.a 
+                  key={link}
+                  href="#" 
+                  className="font-body text-xs text-sand/40 transition-all duration-300"
+                  whileHover={{ 
+                    color: 'hsl(42, 55%, 58%)',
+                    textShadow: '0 0 10px hsla(42, 55%, 58%, 0.3)',
+                  }}
+                >
+                  {link}
+                </motion.a>
+              ))}
             </div>
           </div>
         </div>
