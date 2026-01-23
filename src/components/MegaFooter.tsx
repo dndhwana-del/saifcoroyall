@@ -200,7 +200,7 @@ const MegaFooter = () => {
             duration: 0.2
           }}>
               <Phone size={20} strokeWidth={1.5} className="text-gold" />
-              <span className="font-display text-xl tracking-wide transition-all duration-300" style={{
+              <span className="text-xl tracking-wide transition-all duration-300 font-sans text-ring" style={{
               color: 'hsl(42, 55%, 58%)',
               textShadow: 'none'
             }} onMouseEnter={e => e.currentTarget.style.textShadow = '0 0 20px hsla(42, 55%, 58%, 0.5)'} onMouseLeave={e => e.currentTarget.style.textShadow = 'none'}>
@@ -277,7 +277,7 @@ const MegaFooter = () => {
               
               {/* Saifco Branding */}
               <div className="flex items-center gap-2">
-                <span className="font-body text-xs tracking-wide" style={{
+                <span className="font-body tracking-wide text-sm text-primary" style={{
                 color: 'hsl(42, 50%, 55%)'
               }}>
                   Made by Saifco 
