@@ -18,6 +18,8 @@ import MegaFooter from "@/components/MegaFooter";
 import PropertyCarousel from "@/components/PropertyCarousel";
 import MagneticButton from "@/components/MagneticButton";
 import ParallaxSection, { ParallaxFloat, ParallaxLayers, HorizontalParallax } from "@/components/ParallaxSection";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import TrustedPartners from "@/components/TrustedPartners";
 
 const properties = [
   { image: property1, title: "Al Qasr Palace", location: "Emirates Hills, Dubai", price: "AED 185M", bedrooms: 12, bathrooms: 15, area: "45,000 sqft" },
@@ -116,8 +118,14 @@ const Index = () => {
         </div>
       </nav>
 
+      {/* Floating WhatsApp Button */}
+      <FloatingWhatsApp />
+
       {/* Hero Section */}
       <HeroSection />
+
+      {/* Trusted Partners Strip */}
+      <TrustedPartners />
 
       {/* Property Carousel - Overlaps hero with negative margin */}
       <PropertyCarousel properties={properties} />
