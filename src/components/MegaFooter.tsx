@@ -117,7 +117,7 @@ const MegaFooter = () => {
       </div>
 
       {/* Main Footer Content */}
-      <div className="relative container mx-auto px-6 py-20 pt-24">
+      <div className="relative container mx-auto px-4 md:px-6 py-12 md:py-20 pt-16 md:pt-24">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Column 1: Brand */}
           <div className="lg:col-span-1">
@@ -265,7 +265,7 @@ const MegaFooter = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/30 to-transparent blur-sm" />
         </div>
         
-        <div className="container mx-auto px-6 py-8">
+        <div className="container mx-auto px-4 md:px-6 py-6 md:py-8">
           <div className="flex flex-col items-center gap-6">
             {/* Copyright + Saifco Branding */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">

@@ -35,7 +35,7 @@ const HeroSection = () => {
           ease: "easeInOut"
         }}>
                 {/* Ken Burns Effect - Slow zoom animation */}
-                <motion.img src={slide} alt={`Luxurious Arabian Gulf Palace Interior ${index + 1}`} className="w-full h-full object-cover object-center" initial={{
+                <motion.img src={slide} alt="Luxurious Arabian Gulf Palace Interior featuring opulent gold decor and traditional architecture" className="w-full h-full object-cover object-center" initial={{
             scale: 1
           }} animate={{
             scale: 1.15
@@ -63,7 +63,7 @@ const HeroSection = () => {
         </div>}
 
       {/* Hero Content */}
-      <div className="relative z-20 container mx-auto px-6 text-center">
+      <div className="relative z-20 container mx-auto px-4 md:px-6 text-center">
         <div className="max-w-4xl mx-auto">
           {/* Arabic Calligraphy Element */}
           <motion.div initial={{
@@ -181,7 +181,7 @@ const HeroSection = () => {
         }} transition={{
           duration: 0.8,
           delay: 1
-        }} className="flex flex-col sm:flex-row gap-6 justify-center">
+        }} className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center px-4">
             <MagneticButton strength={0.4}>
               <RoyalButton size="lg" className="[&>span]:drop-shadow-md">
                 View Collection
