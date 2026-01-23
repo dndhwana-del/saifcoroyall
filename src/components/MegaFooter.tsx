@@ -122,7 +122,6 @@ const MegaFooter = () => {
           {/* Column 1: Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <CalligraphyAccent className="w-16 h-5" />
               <span className="font-royal text-lg tracking-[0.25em] text-gold">
                 ROYAL GULF
               </span>
