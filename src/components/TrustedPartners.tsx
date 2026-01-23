@@ -10,7 +10,7 @@ const partners = [
 
 const TrustedPartners = () => {
   return (
-    <section className="relative py-10 bg-cream/50 border-y border-gold/10 overflow-hidden z-20">
+    <section className="relative py-8 md:py-10 bg-cream/50 border-y border-gold/10 overflow-hidden z-20" aria-labelledby="trusted-partners-heading">
       {/* Subtle gold gradient overlay */}
       <div 
         className="absolute inset-0 pointer-events-none"
@@ -19,20 +19,21 @@ const TrustedPartners = () => {
         }}
       />
       
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
-        <motion.p
-          className="text-center font-body text-xs tracking-[0.35em] uppercase text-gold/70 mb-8"
+        <motion.h2
+          id="trusted-partners-heading"
+          className="text-center font-body text-xs tracking-[0.35em] uppercase text-gold/70 mb-6 md:mb-8"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
           Trusted By The Elite
-        </motion.p>
+        </motion.h2>
         
         {/* Partner Logos */}
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12 lg:gap-16">
           {partners.map((partner, index) => (
             <motion.div
               key={partner.name}

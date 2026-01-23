@@ -145,8 +145,9 @@ const PropertyCard = ({
           <div className="aspect-[4/3] overflow-hidden">
             <motion.img
               src={property.image}
-              alt={property.title}
+              alt={`${property.title} - Luxury ${property.bedrooms} bedroom estate in ${property.location}`}
               className="w-full h-full object-cover"
+              loading="lazy"
               animate={{ 
                 scale: isHovered ? 1.2 : 1,
                 filter: isHovered ? "brightness(1.15) saturate(1.1)" : "brightness(1) saturate(1)",

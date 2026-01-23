@@ -71,8 +71,8 @@ const Index = () => {
       />
       
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-lg border-b border-primary/10">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-primary/10 transition-all duration-300" role="navigation" aria-label="Main navigation">
+        <div className="container mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
           <motion.div 
             className="flex items-center gap-3"
             initial={{ opacity: 0, x: -20 }}
@@ -137,7 +137,7 @@ const Index = () => {
         smoothness={60}
       >
         <ParallaxLayers />
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <SmoothScrollReveal className="text-center max-w-3xl mx-auto mb-12" direction="up" blur>
             <FloatingElement intensity={0.15} direction="vertical">
               <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
@@ -203,7 +203,7 @@ const Index = () => {
         {/* Pattern continuation */}
         <div className="absolute inset-0 mashrabiya-pattern opacity-20 z-[2]" />
         
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <SmoothScrollReveal direction="left" distance={80} blur>
               <FloatingElement intensity={0.12} direction="vertical">
@@ -295,7 +295,7 @@ const Index = () => {
           <div className="w-32 h-32 bg-gradient-radial from-gold/20 to-transparent rounded-full blur-3xl" />
         </FloatingElement>
         
-        <div className="container mx-auto px-6 text-center max-w-3xl relative z-10">
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl relative z-10">
           <SmoothScrollReveal direction="up" distance={60} blur>
             <FloatingElement intensity={0.1} direction="vertical">
               <CalligraphyAccent className="mx-auto mb-4 w-28 h-7" />
