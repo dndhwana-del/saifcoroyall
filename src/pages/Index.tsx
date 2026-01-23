@@ -80,7 +80,7 @@ const Index = () => {
             transition={{ duration: 0.6 }}
           >
             <CalligraphyAccent className="w-20 h-6" />
-            <span className="font-display text-xl tracking-[0.2em] text-primary">
+            <span className="font-display text-2xl tracking-[0.2em] text-shimmer">
               ROYAL GULF
             </span>
           </motion.div>
