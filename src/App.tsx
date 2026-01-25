@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import LuxuryCursor from "./components/LuxuryCursor";
 import Preloader from "./components/Preloader";
 import { SmoothScrollProvider } from "./components/SmoothScrollProvider";
+import PageTransition from "./components/PageTransition";
 
 const queryClient = new QueryClient();
 
@@ -33,11 +34,13 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <PageTransition>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </PageTransition>
           </BrowserRouter>
         </SmoothScrollProvider>
       </TooltipProvider>
