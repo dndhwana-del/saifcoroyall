@@ -102,15 +102,62 @@ html.lenis, html.lenis body {
     scroll-behavior: smooth;
   }
 
+  /* Hide scrollbar for snap-scroll carousels */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   }
 
-  /* Royal Typography */
+  /* Royal Typography with Fluid Sizing (clamp) */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Cinzel Decorative', 'Playfair Display', serif;
     @apply text-primary tracking-wide;
+  }
+
+  /* Fluid Typography Scale using clamp() */
+  .text-fluid-xs {
+    font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  }
+  
+  .text-fluid-sm {
+    font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  }
+  
+  .text-fluid-base {
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  }
+  
+  .text-fluid-lg {
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  }
+  
+  .text-fluid-xl {
+    font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem);
+  }
+  
+  .text-fluid-2xl {
+    font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  }
+  
+  .text-fluid-3xl {
+    font-size: clamp(1.875rem, 1.4rem + 2.25vw, 3.5rem);
+  }
+  
+  .text-fluid-4xl {
+    font-size: clamp(2.25rem, 1.6rem + 3.25vw, 4.5rem);
+  }
+  
+  .text-fluid-5xl {
+    font-size: clamp(3rem, 2rem + 5vw, 6rem);
   }
 
   /* Mashrabiya Pattern Overlay - The Gulf Touch */
