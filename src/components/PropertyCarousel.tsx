@@ -1,10 +1,9 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { Bed, Bath, Maximize2, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, useState } from "react";
+import { Bed, Bath, Maximize2 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import CalligraphyAccent from "./CalligraphyAccent";
 import PropertyDetailModal from "./PropertyDetailModal";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 // Stagger reveal animation variants
 const containerVariants = {
@@ -337,12 +336,9 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
   const [isPaused, setIsPaused] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mobileIndex, setMobileIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const mobileScrollRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const isMobile = useIsMobile();
 
   const handlePropertyClick = (property: Property) => {
     setSelectedProperty(property);
@@ -353,28 +349,8 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedProperty(null), 300);
   };
-
-  // Mobile snap navigation
-  const scrollToIndex = (index: number) => {
-    if (mobileScrollRef.current) {
-      const cardWidth = mobileScrollRef.current.scrollWidth / properties.length;
-      mobileScrollRef.current.scrollTo({
-        left: cardWidth * index,
-        behavior: 'smooth'
-      });
-      setMobileIndex(index);
-    }
-  };
-
-  const handleMobileScroll = () => {
-    if (mobileScrollRef.current) {
-      const cardWidth = mobileScrollRef.current.scrollWidth / properties.length;
-      const newIndex = Math.round(mobileScrollRef.current.scrollLeft / cardWidth);
-      setMobileIndex(newIndex);
-    }
-  };
   
-  // Duplicate properties for infinite scroll effect (desktop only)
+  // Duplicate properties for infinite scroll effect
   const duplicatedProperties = [...properties, ...properties, ...properties];
 
   return (
@@ -403,140 +379,72 @@ const PropertyCarousel = ({ properties }: PropertyCarouselProps) => {
           </motion.div>
         </div>
 
-        {/* Mobile: Snap-scroll carousel */}
-        {isMobile ? (
-          <div className="relative">
-            {/* Snap-scroll container */}
-            <div
-              ref={mobileScrollRef}
-              className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 pb-4"
-              style={{ scrollSnapType: 'x mandatory' }}
-              onScroll={handleMobileScroll}
-            >
-              {properties.map((property, index) => (
-                <div
-                  key={`mobile-${property.title}-${index}`}
-                  className="flex-shrink-0 w-[85vw] max-w-[340px] snap-center"
-                  style={{ scrollSnapAlign: 'center' }}
-                >
-                  <PropertyCard
-                    property={property}
-                    index={index}
-                    isHovered={false}
-                    onHover={() => {}}
-                    onLeave={() => {}}
-                    onClick={() => handlePropertyClick(property)}
-                  />
-                </div>
-              ))}
-            </div>
+        {/* Infinite Carousel with staggered reveal */}
+        <motion.div 
+          className="relative overflow-hidden"
+          variants={cardVariants}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Gradient Fade Edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-30 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-30 pointer-events-none" />
 
-            {/* Mobile navigation dots */}
-            <div className="flex items-center justify-center gap-2 mt-4">
-              {properties.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => scrollToIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === mobileIndex 
-                      ? 'bg-primary w-6' 
-                      : 'bg-primary/30'
-                  }`}
-                  aria-label={`Go to property ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Mobile arrow navigation */}
-            <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 pointer-events-none">
-              <motion.button
-                className="w-10 h-10 rounded-full bg-espresso/80 backdrop-blur-sm flex items-center justify-center text-gold pointer-events-auto"
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToIndex(Math.max(0, mobileIndex - 1))}
-                aria-label="Previous property"
-              >
-                <ChevronLeft size={20} />
-              </motion.button>
-              <motion.button
-                className="w-10 h-10 rounded-full bg-espresso/80 backdrop-blur-sm flex items-center justify-center text-gold pointer-events-auto"
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToIndex(Math.min(properties.length - 1, mobileIndex + 1))}
-                aria-label="Next property"
-              >
-                <ChevronRight size={20} />
-              </motion.button>
-            </div>
-          </div>
-        ) : (
-          /* Desktop: Infinite scroll carousel */
-          <motion.div 
-            className="relative overflow-hidden"
-            variants={cardVariants}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
+          {/* Scrolling Container */}
+          <motion.div
+            ref={containerRef}
+            className="flex gap-8 py-8 px-4"
+            animate={{
+              x: isPaused ? undefined : [0, -1 * (440 * properties.length)],
+            }}
+            transition={{
+              x: {
+                duration: 30,
+                repeat: Infinity,
+                ease: "linear",
+              },
+            }}
+            style={{ width: "fit-content" }}
           >
-            {/* Gradient Fade Edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-30 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-30 pointer-events-none" />
+            {duplicatedProperties.map((property, index) => (
+              <PropertyCard
+                key={`${property.title}-${index}`}
+                property={property}
+                index={index}
+                isHovered={hoveredIndex === index}
+                onHover={() => {
+                  setHoveredIndex(index);
+                }}
+                onLeave={() => {
+                  setHoveredIndex(null);
+                }}
+                onClick={() => handlePropertyClick(property)}
+              />
+            ))}
+          </motion.div>
+        </motion.div>
 
-            {/* Scrolling Container */}
+        {/* Navigation Hint */}
+        <motion.div 
+          className="container mx-auto px-6 mt-8"
+          variants={cardVariants}
+        >
+          <div className="flex items-center justify-center gap-2 text-muted-foreground/60">
             <motion.div
-              ref={containerRef}
-              className="flex gap-8 py-8 px-4"
-              animate={{
-                x: isPaused ? undefined : [0, -1 * (440 * properties.length)],
-              }}
-              transition={{
-                x: {
-                  duration: 30,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-              }}
-              style={{ width: "fit-content" }}
-            >
-              {duplicatedProperties.map((property, index) => (
-                <PropertyCard
-                  key={`${property.title}-${index}`}
-                  property={property}
-                  index={index}
-                  isHovered={hoveredIndex === index}
-                  onHover={() => {
-                    setHoveredIndex(index);
-                  }}
-                  onLeave={() => {
-                    setHoveredIndex(null);
-                  }}
-                  onClick={() => handlePropertyClick(property)}
-                />
-              ))}
-            </motion.div>
-          </motion.div>
-        )}
-
-        {/* Navigation Hint - Desktop only */}
-        {!isMobile && (
-          <motion.div 
-            className="container mx-auto px-6 mt-8"
-            variants={cardVariants}
-          >
-            <div className="flex items-center justify-center gap-2 text-muted-foreground/60">
-              <motion.div
-                className="w-8 h-px bg-primary/40"
-                animate={{ scaleX: [1, 1.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span className="font-body text-xs tracking-widest uppercase">
-                Hover to explore
-              </span>
-              <motion.div
-                className="w-8 h-px bg-primary/40"
-                animate={{ scaleX: [1, 1.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
-          </motion.div>
-        )}
+              className="w-8 h-px bg-primary/40"
+              animate={{ scaleX: [1, 1.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <span className="font-body text-xs tracking-widest uppercase">
+              Hover to explore
+            </span>
+            <motion.div
+              className="w-8 h-px bg-primary/40"
+              animate={{ scaleX: [1, 1.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </div>
+        </motion.div>
       </div>
 
       {/* Property Detail Modal */}

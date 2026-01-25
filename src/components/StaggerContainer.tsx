@@ -22,16 +22,16 @@ const containerVariants: Variants = {
 export const staggerItemVariants: Variants = {
   hidden: { 
     opacity: 0, 
-    y: 20, // Refined 20px upward reveal
-    scale: 1, // No scale for cleaner motion
+    y: 30,
+    scale: 0.95,
   },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.6,
-      ease: [0.25, 1, 0.5, 1], // Custom bezier: quick start, smooth deceleration
+      duration: 0.5,
+      ease: [0.25, 0.4, 0.25, 1],
     },
   },
 };

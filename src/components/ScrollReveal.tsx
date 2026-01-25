@@ -91,7 +91,7 @@ const ScrollReveal = ({
       transition={{
         duration,
         delay,
-        ease: [0.25, 1, 0.5, 1], // Custom luxury bezier for stagger-fade
+        ease: [0.25, 0.4, 0.25, 1], // Luxury smooth easing
       }}
     >
       {children}

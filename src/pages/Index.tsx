@@ -130,7 +130,7 @@ const Index = () => {
       {/* Property Carousel - Overlaps hero with negative margin */}
       <PropertyCarousel properties={properties} />
 
-      {/* Stats Section with Enhanced Parallax Layers - 8px grid aligned */}
+      {/* Stats Section with Enhanced Parallax Layers */}
       <ParallaxSection 
         id="estates" 
         className="relative -mt-8 py-16 z-10"
@@ -152,8 +152,8 @@ const Index = () => {
             </p>
           </SmoothScrollReveal>
 
-          {/* Stats with floating card effect and scroll-linked parallax - 8px grid spacing */}
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto">
+          {/* Stats with floating card effect and scroll-linked parallax */}
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
             {[
               { value: "50+", label: "Royal Estates" },
               { value: "25", label: "Years of Excellence" },
@@ -163,7 +163,7 @@ const Index = () => {
               <StaggerItem key={index}>
                 <ScrollLinkedReveal parallaxIntensity={0.1 + index * 0.05}>
                   <motion.div 
-                    className="text-center p-4 md:p-6 border border-primary/20 bg-card/80 backdrop-blur-sm shadow-soft relative overflow-hidden group"
+                    className="text-center p-5 md:p-6 border border-primary/20 bg-card/80 backdrop-blur-sm shadow-soft relative overflow-hidden group"
                     whileHover={{ 
                       y: -8, 
                       boxShadow: "0 20px 40px -15px hsla(42, 55%, 50%, 0.3)" 

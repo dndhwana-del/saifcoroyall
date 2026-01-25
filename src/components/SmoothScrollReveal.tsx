@@ -21,16 +21,16 @@ const SmoothScrollReveal = ({
   children,
   className = "",
   delay = 0,
-  duration = 0.7,
+  duration = 0.8,
   once = true,
   direction = "up",
-  distance = 20, // Refined 20px distance for elegant reveals
-  blur = false, // Disable blur by default for cleaner motion
+  distance = 60,
+  blur = true,
   stagger = false,
   staggerDelay = 0.1,
 }: SmoothScrollRevealProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, margin: "-60px" });
+  const isInView = useInView(ref, { once, margin: "-80px" });
 
   const getInitialState = () => {
     switch (direction) {
@@ -43,9 +43,9 @@ const SmoothScrollReveal = ({
       case "right":
         return { y: 0, x: -distance, scale: 1, rotate: 0 };
       case "scale":
-        return { y: 0, x: 0, scale: 0.95, rotate: 0 };
+        return { y: 0, x: 0, scale: 0.9, rotate: 0 };
       case "rotate":
-        return { y: 10, x: 0, scale: 0.99, rotate: 2 };
+        return { y: 20, x: 0, scale: 0.98, rotate: 3 };
       case "none":
         return { y: 0, x: 0, scale: 1, rotate: 0 };
     }
@@ -59,7 +59,7 @@ const SmoothScrollReveal = ({
       className={className}
       initial={{ 
         opacity: 0, 
-        filter: blur ? "blur(4px)" : "blur(0px)",
+        filter: blur ? "blur(8px)" : "blur(0px)",
         ...initial 
       }}
       animate={isInView ? { 
@@ -71,13 +71,13 @@ const SmoothScrollReveal = ({
         filter: "blur(0px)",
       } : { 
         opacity: 0, 
-        filter: blur ? "blur(4px)" : "blur(0px)",
+        filter: blur ? "blur(8px)" : "blur(0px)",
         ...initial 
       }}
       transition={{
         duration,
         delay,
-        ease: [0.25, 1, 0.5, 1], // Custom luxury bezier: quick start, smooth deceleration
+        ease: [0.25, 0.4, 0.25, 1], // Luxury easing
       }}
     >
       {children}
